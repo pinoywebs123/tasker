@@ -1,4 +1,4 @@
-##How to Setup the project
+##How to Setup the project tasker
 
 <p>install git: https://git-scm.com/</p>
 <p>use git console to clone</p>
