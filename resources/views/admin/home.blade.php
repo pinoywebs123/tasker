@@ -232,7 +232,7 @@
                       </td>
                       <td class="align-middle">
                         <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$user->id}}">Edit</button>
-                        <button class="btn btn-danger btn-xs archive" value="{{$user->id}}">Delete</button>
+                        <button class="btn btn-danger btn-xs archive" value="{{$user->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal" value="{{$user->id}}">Delete</button>
                       </td>
                     </tr>
 
@@ -328,6 +328,34 @@
     </div>
   </div>
 </div>
+
+<div class="modal" id="deleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure you want to delete?</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form action="{{route('admin_delete_user')}}" method="POST">
+        @csrf
+      <!-- Modal body -->
+      <div class="modal-body">
+        <input type="hidden" name="user_id" id="delete_user_id">
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+      </form>
+
+    </div>
+  </div>
+</div>
   
   <!--   Core JS Files   -->
   <script src="{{URL::to('/assets/js/core/popper.min.js')}}"></script>
@@ -368,6 +396,11 @@
            }
         });
 
+      });
+
+      $(".archive").click(function(){
+          var user_id = $(this).val();
+          $("#delete_user_id").val(user_id);
       });
     });
   </script>

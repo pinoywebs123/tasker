@@ -57,4 +57,15 @@ class AdminController extends Controller
         return back()->with('success','Updated Successfully');
             
     }
+
+    public function deleteUser(Request $request)
+    {
+        $find_user = User::find($request->user_id);
+        if($find_user)
+        {
+            $find_user->delete();
+        }
+
+        return back()->with('success','Deleted Successfully');
+    }
 }
