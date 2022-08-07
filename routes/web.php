@@ -20,6 +20,8 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth','role:admin']], function
     Route::get('/logout',[AdminController::class, 'logout'])->name('admin_logout');
 
     Route::get('/projects',[AdminController::class, 'projects'])->name('admin_projects');
+    Route::post('/find-user',[AdminController::class, 'findUser'])->name('admin_find_user');
+    Route::post('/update-user',[AdminController::class, 'updateUser'])->name('admin_update_user');
 
 });
 

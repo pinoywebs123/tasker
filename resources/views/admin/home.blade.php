@@ -184,6 +184,7 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Users Table</h6>
+              @include('shared.notification')
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -193,6 +194,8 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Author</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Position</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
@@ -218,13 +221,18 @@
                       <td class="align-middle text-center text-sm">
                         <span class="badge badge-sm bg-gradient-success">Active</span>
                       </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm bg-gradient-primary">{{$user->position->name}}</span>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm bg-gradient-info">{{$user->department->name}}</span>
+                      </td>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{$user->created_at->diffForHumans()}}</span>
                       </td>
                       <td class="align-middle">
-                        <button class="btn btn-info btn-xs">Edit</button>
-                        <button class="btn btn-primary btn-xs">View</button>
-                        <button class="btn btn-danger btn-xs">Delete</button>
+                        <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$user->id}}">Edit</button>
+                        <button class="btn btn-danger btn-xs archive" value="{{$user->id}}">Delete</button>
                       </td>
                     </tr>
 
@@ -257,6 +265,69 @@
       </footer>
     </div>
   </main>
+
+  <div class="modal" id="editModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">User Informations</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form role="form" action="{{route('admin_update_user')}}" method="POST">
+      <!-- Modal body -->
+      <div class="modal-body">
+         
+                @csrf
+                <input type="hidden" name="user_id" id="user_id">
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="name" required id="name">
+                </div>
+                <div class="mb-3">
+                  <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required id="email">
+                </div>
+
+
+                <div class="mb-3">
+                  <label>Select Position</label>
+                  <select class="form-control" name="position" required id="position">
+                    @foreach($positions as $post)
+                      <option value="{{$post->id}}">{{$post->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label>Select Department</label>
+                  <select class="form-control" name="department" required id="department">
+                     @foreach($departments as $dept)
+                      <option value="{{$dept->id}}">{{$dept->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password">
+                </div>
+                
+                <div class="text-center">
+                  <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Update</button>
+                </div>
+                
+              
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+      </form>
+
+    </div>
+  </div>
+</div>
   
   <!--   Core JS Files   -->
   <script src="{{URL::to('/assets/js/core/popper.min.js')}}"></script>
@@ -276,6 +347,30 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{URL::to('/assets/js/argon-dashboard.min.js?v=2.0.4')}}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var find_user_url = "{{route('admin_find_user')}}"; 
+      var token = "{{Session::token()}}";
+      $(".edit").click(function(){
+        var user_id = $(this).val();
+        $.ajax({
+           type:'POST',
+           url:find_user_url,
+           data:{_token: token, user_id : user_id},
+           success:function(data) {
+              console.log(data);
+              $("#name").val(data.name);
+              $("#email").val(data.email);
+              $("#position").val(data.position_id);
+              $("#department").val(data.department_id);
+              $("#user_id").val(user_id);
+           }
+        });
+
+      });
+    });
+  </script>
 </body>
 
 </html>
