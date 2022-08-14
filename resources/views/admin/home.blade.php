@@ -184,6 +184,7 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Users Table</h6>
+              <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
               @include('shared.notification')
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -267,66 +268,66 @@
   </main>
 
   <div class="modal" id="editModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">User Informations</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">User Informations</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
 
-      <form role="form" action="{{route('admin_update_user')}}" method="POST">
-      <!-- Modal body -->
-      <div class="modal-body">
-         
-                @csrf
-                <input type="hidden" name="user_id" id="user_id">
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="name" required id="name">
-                </div>
-                <div class="mb-3">
-                  <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required id="email">
-                </div>
+        <form role="form" action="{{route('admin_update_user')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+                  @csrf
+                  <input type="hidden" name="user_id" id="user_id">
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="name" required id="name">
+                  </div>
+                  <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required id="email">
+                  </div>
 
 
-                <div class="mb-3">
-                  <label>Select Position</label>
-                  <select class="form-control" name="position" required id="position">
-                    @foreach($positions as $post)
-                      <option value="{{$post->id}}">{{$post->name}}</option>
-                    @endforeach
-                  </select>
-                </div>
+                  <div class="mb-3">
+                    <label>Select Position</label>
+                    <select class="form-control" name="position" required id="position">
+                      @foreach($positions as $post)
+                        <option value="{{$post->id}}">{{$post->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
 
-                <div class="mb-3">
-                  <label>Select Department</label>
-                  <select class="form-control" name="department" required id="department">
-                     @foreach($departments as $dept)
-                      <option value="{{$dept->id}}">{{$dept->name}}</option>
-                    @endforeach
-                  </select>
-                </div>
+                  <div class="mb-3">
+                    <label>Select Department</label>
+                    <select class="form-control" name="department" required id="department">
+                       @foreach($departments as $dept)
+                        <option value="{{$dept->id}}">{{$dept->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
 
-                <div class="mb-3">
-                  <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password">
-                </div>
+                  <div class="mb-3">
+                    <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password">
+                  </div>
+                  
+                  <div class="text-center">
+                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Update</button>
+                  </div>
+                  
                 
-                <div class="text-center">
-                  <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Update</button>
-                </div>
-                
-              
-      </div>
+        </div>
 
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-      </div>
-      </form>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
 
+      </div>
     </div>
-  </div>
 </div>
 
 <div class="modal" id="deleteModal">
@@ -355,6 +356,83 @@
 
     </div>
   </div>
+</div>
+
+<div class="modal" id="createModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">User Informations</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('register')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+                  @csrf
+                  
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="name" required id="name">
+                  </div>
+                  <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required id="email">
+                  </div>
+
+                  <div class="mb-3">
+                    <label>Select User Type</label>
+                    <select class="form-control" name="user_type" required>
+                      <option value="1">Project Manager</option>
+                      <option value="2">Tasker</option>
+                    </select>
+                  </div>
+
+
+                  <div class="mb-3">
+                    <label>Select Position</label>
+                    <select class="form-control" name="position" required id="position">
+                      @foreach($positions as $post)
+                        <option value="{{$post->id}}">{{$post->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label>Select Department</label>
+                    <select class="form-control" name="department" required id="department">
+                       @foreach($departments as $dept)
+                        <option value="{{$dept->id}}">{{$dept->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label>Password</label>
+                    <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password">
+                  </div>
+
+                  <div class="mb-3">
+                    <label>Repeat Password</label>
+                    <input type="password" class="form-control" placeholder="Repeat Password" aria-label="Password" name="repeat_password" required>
+                  </div>
+                  
+                  <div class="text-center">
+                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Update</button>
+                  </div>
+                  
+                
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
 </div>
   
   <!--   Core JS Files   -->

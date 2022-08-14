@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Position;
+use App\Models\Project;
+use App\Models\Task;
+
 use App\Models\Department;
+
 
 class AdminController extends Controller
 {
@@ -26,7 +30,8 @@ class AdminController extends Controller
 
     public function projects()
     {
-        return view('admin.projects');
+        $projects = Project::all();
+        return view('admin.projects',compact('projects'));
     }
 
     public function findUser(Request $request)
@@ -67,5 +72,62 @@ class AdminController extends Controller
         }
 
         return back()->with('success','Deleted Successfully');
+    }
+
+    public function createProjects(Request $request)
+    {
+        $proj = new Project;
+        $proj->user_id      = Auth::id();
+        $proj->status_id    = 1;
+        $proj->title        = $request->title;
+        $proj->description  = $request->description;
+        $proj->save();
+       
+        return back()->with('success','Created Successfully');
+    }
+
+    public function changeProjectStatus(Request $request)
+    {
+        $find_project = Project::find($request->project_id);
+
+        if(!$find_project)
+        {
+            return back()->with('error','Project Not Found');
+        }
+
+        if($find_project->status_id == 1)
+        {
+            $status_id = 0;
+        }else if($find_project->status_id == 0)
+        {
+            $status_id = 1;
+        }
+
+        $find_project->update(['status_id'=> $status_id]);
+
+        return back()->with('success','Status Updated Successfully');
+    }
+
+    public function findProjects(Request $request)
+    {
+        $find_project = Project::find($request->project_id);
+        return response()->json( $find_project );
+    }
+
+    public function updateProjects(Request $request)
+    {
+        $find_project = Project::find($request->project_id);
+
+        if(!$find_project)
+        {
+            return back()->with('error','Project Not Found');
+        }
+
+        $find_project->update([
+            'title'         => $request->title, 
+            'description'   => $request->description
+        ]);
+
+        return back()->with('success','Project Updated Successfully');
     }
 }
