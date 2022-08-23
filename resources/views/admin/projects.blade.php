@@ -33,44 +33,7 @@
     </div>
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-      <ul class="navbar-nav">
-
-        <li class="nav-item">
-          <a class="nav-link " href="{{route('admin_home')}}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Users</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link active" href="{{route('admin_projects')}}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Projects</span>
-          </a>
-        </li>
-        
-        
-       
-        
-        <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
-        </li>
-        
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{{route('admin_logout')}}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Sign Out</span>
-          </a>
-        </li>
-        
-      </ul>
+      @include('shared.side')
     </div>
     
   </aside>
@@ -230,10 +193,12 @@
 
                         @if($proj->status_id == 1)
                           <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}">Archive</button>
+                          <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs">View</a>
+                          <button class="btn btn-primary btn-xs assign" data-bs-toggle="modal" data-bs-target="#assignsModal" value="{{$proj->id}}">Assign Department</button>
                         @elseif($proj->status_id == 0)
                           <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}">Activate</button>
                         @endif
-
+                        
                       </td>
 
                     </tr>
@@ -354,6 +319,44 @@
       </div>
     </div>
   </div>
+
+    <div class="modal" id="assignsModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Assign Project</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('admin_assign_project')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="hidden" name="project_id" id="assignTask">
+        <div class="form-group">
+          <label>Select Department</label>
+          <select class="form-control" name="department_id" required>
+            <option></option>
+            @foreach($departments as $dept)
+              <option value="{{$dept->id}}">{{$dept->name}}</option>
+            @endforeach
+          </select>
+        </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Yes</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
   
   <!--   Core JS Files   -->
   <script src="{{URL::to('/assets/js/core/popper.min.js')}}"></script>
@@ -382,6 +385,12 @@
       $(".archive").click(function(){
         var project_id = $(this).val();
         $("#statusProjectId").val(project_id);
+
+      });
+
+      $(".assign").click(function(){
+        var project_id = $(this).val();
+        $("#assignTask").val(project_id);
 
       });
 

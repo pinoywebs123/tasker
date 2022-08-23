@@ -32,7 +32,7 @@ class AuthController extends Controller
                 return redirect()->route('admin_home');
             }else if( Auth::user()->getRoleNames()[0] == 'manager')
             {
-                return 'manager';
+                return redirect()->route('admin_home');
             }else if( Auth::user()->getRoleNames()[0] == 'tasker')
             {
                 return 'tasker';

@@ -27,7 +27,7 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-        <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+        <img src="{{URL::to('/assets/img/logo-ct-dark.png')}}" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold">Dashboard</span>
       </a>
     </div>
@@ -147,8 +147,9 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Users Table</h6>
+              <h6>Tasks Lists</h6>
               <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
+              <h3>Project assign to: {{isset($find_assign_project->department->name) ? $find_assign_project->department->name : 'None'}}</h3>
               @include('shared.notification')
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -156,53 +157,55 @@
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Author</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                     
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Position</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($users as $user)
+                    @foreach($tasks as $task)
                     <tr>
+                      
                       <td>
                         <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
+                          
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$user->name}}</h6>
-                            <p class="text-xs text-secondary mb-0">{{$user->email}}</p>
+                            <h6 class="mb-0 text-sm">{{$task->title}}</h6>
+                            
                           </div>
                         </div>
                       </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">{{strtoupper($user->getRoleNames()[0])}}</p>
+                     
+                      <td class="align-middle text-center text-sm">
+                        @if($task->status_id == 1)
+                          <span class="badge badge-sm bg-gradient-success">Active</span>
+                        @elseif($task->status_id == 0)
+                          <span class="badge badge-sm bg-gradient-danger">Inactive</span>
+                        @endif
                         
                       </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Active</span>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-primary">{{$user->position->name}}</span>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-info">{{$user->department->name}}</span>
-                      </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{$user->created_at->diffForHumans()}}</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$task->created_at->diffForHumans()}}</span>
                       </td>
                       <td class="align-middle">
-                        <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$user->id}}">Edit</button>
-                        <button class="btn btn-danger btn-xs archive" value="{{$user->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal" value="{{$user->id}}">Delete</button>
+                        <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$task->id}}">Edit</button>
+
+                        @if($task->status_id == 1)
+                          <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}">Archive</button>
+                        
+                          
+                        @elseif($task->status_id == 0)
+                          <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}">Activate</button>
+                        @endif
+
                       </td>
+
                     </tr>
 
                     @endforeach
-
+                    
                   </tbody>
                 </table>
               </div>
@@ -211,25 +214,46 @@
         </div>
       </div>
       
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                made with <i class="fa fa-heart"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                for a better web.
-              </div>
-            </div>
-            
-          </div>
-        </div>
-      </footer>
+      
     </div>
   </main>
+  <div class="modal" id="createModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Task Informations</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('admin_create_task')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="hidden" name="project_id" value="{{Request::segment(2)}}">
+        <div class="mb-3">
+          <label>Task Name</label>
+          <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="name">
+        </div> 
+        <div class="mb-3">
+          <label>Task Description</label>
+          <textarea class="form-control" name="description" required></textarea>
+        </div>         
+       
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Submit</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
 
   <div class="modal" id="editModal">
     <div class="modal-dialog">
@@ -237,167 +261,68 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">User Informations</h4>
+          <h4 class="modal-title">Project Informations</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
-        <form role="form" action="{{route('admin_update_user')}}" method="POST">
+        <form role="form" action="{{route('admin_update_task')}}" method="POST">
         <!-- Modal body -->
         <div class="modal-body">
            
-                  @csrf
-                  <input type="hidden" name="user_id" id="user_id">
-                  <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="name" required id="name">
-                  </div>
-                  <div class="mb-3">
-                    <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required id="email">
-                  </div>
-
-
-                  <div class="mb-3">
-                    <label>Select Position</label>
-                    <select class="form-control" name="position" required id="position">
-                      @foreach($positions as $post)
-                        <option value="{{$post->id}}">{{$post->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-
-                  <div class="mb-3">
-                    <label>Select Department</label>
-                    <select class="form-control" name="department" required id="department">
-                       @foreach($departments as $dept)
-                        <option value="{{$dept->id}}">{{$dept->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-
-                  <div class="mb-3">
-                    <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password">
-                  </div>
-                  
-                  <div class="text-center">
-                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Update</button>
-                  </div>
-                  
-                
+        @csrf
+        <input type="hidden" name="task_id" id="updateProjectId">
+        <div class="mb-3">
+          <label>Project Name</label>
+          <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="editTitle">
+        </div> 
+        <div class="mb-3">
+          <label>Project Description</label>
+          <textarea class="form-control" name="description" required id="editDescription"></textarea>
+        </div>         
+       
         </div>
 
         <!-- Modal footer -->
         <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Submit</button>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
         </div>
         </form>
 
       </div>
     </div>
-</div>
-
-<div class="modal" id="deleteModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Are you sure you want to delete?</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <form action="{{route('admin_delete_user')}}" method="POST">
-        @csrf
-      <!-- Modal body -->
-      <div class="modal-body">
-        <input type="hidden" name="user_id" id="delete_user_id">
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-success">Submit</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-      </div>
-      </form>
-
-    </div>
   </div>
-</div>
 
-<div class="modal" id="createModal">
+  <div class="modal" id="statusModal">
     <div class="modal-dialog">
       <div class="modal-content">
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">User Informations</h4>
+          <h4 class="modal-title">Change Status?</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
-        <form role="form" action="{{route('register')}}" method="POST">
+        <form role="form" action="{{route('admin_change_task_status')}}" method="POST">
         <!-- Modal body -->
         <div class="modal-body">
            
-                  @csrf
-                  
-                  <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="name" required id="name">
-                  </div>
-                  <div class="mb-3">
-                    <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required id="email">
-                  </div>
-
-                  <div class="mb-3">
-                    <label>Select User Type</label>
-                    <select class="form-control" name="user_type" required>
-                      <option value="1">Project Manager</option>
-                      <option value="2">Tasker</option>
-                    </select>
-                  </div>
-
-
-                  <div class="mb-3">
-                    <label>Select Position</label>
-                    <select class="form-control" name="position" required id="position">
-                      @foreach($positions as $post)
-                        <option value="{{$post->id}}">{{$post->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-
-                  <div class="mb-3">
-                    <label>Select Department</label>
-                    <select class="form-control" name="department" required id="department">
-                       @foreach($departments as $dept)
-                        <option value="{{$dept->id}}">{{$dept->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-
-                  <div class="mb-3">
-                    <label>Password</label>
-                    <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password">
-                  </div>
-
-                  <div class="mb-3">
-                    <label>Repeat Password</label>
-                    <input type="password" class="form-control" placeholder="Repeat Password" aria-label="Password" name="repeat_password" required>
-                  </div>
-                  
-                  <div class="text-center">
-                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Update</button>
-                  </div>
-                  
-                
+        @csrf
+        <input type="hidden" name="task_id" id="statusProjectId">
         </div>
 
         <!-- Modal footer -->
         <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Yes</button>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
         </div>
         </form>
 
       </div>
     </div>
-</div>
+  </div>
+
+
   
   <!--   Core JS Files   -->
   <script src="{{URL::to('/assets/js/core/popper.min.js')}}"></script>
@@ -420,30 +345,39 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="text/javascript">
     $(document).ready(function(){
-      var find_user_url = "{{route('admin_find_user')}}"; 
+      var find_project_url = "{{route('admin_find_task')}}";
       var token = "{{Session::token()}}";
-      $(".edit").click(function(){
-        var user_id = $(this).val();
-        $.ajax({
+
+      $(".archive").click(function(){
+        var task_id = $(this).val();
+        $("#statusProjectId").val(task_id);
+
+      });
+
+      $(".assign").click(function(){
+        var task_id = $(this).val();
+        $("#assignTask").val(task_id);
+
+      });
+
+      $(".updateProject").click(function(){
+          var task_id = $(this).val();
+          $("#updateProjectId").val(task_id);
+          $.ajax({
            type:'POST',
-           url:find_user_url,
-           data:{_token: token, user_id : user_id},
+           url:find_project_url,
+           data:{_token: token, task_id : task_id},
            success:function(data) {
               console.log(data);
-              $("#name").val(data.name);
-              $("#email").val(data.email);
-              $("#position").val(data.position_id);
-              $("#department").val(data.department_id);
-              $("#user_id").val(user_id);
+              $("#editTitle").val(data.title);
+              $("#editDescription").val(data.description);
+              
            }
         });
 
+
       });
 
-      $(".archive").click(function(){
-          var user_id = $(this).val();
-          $("#delete_user_id").val(user_id);
-      });
     });
   </script>
 </body>

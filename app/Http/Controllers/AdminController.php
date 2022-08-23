@@ -10,6 +10,7 @@ use App\Models\Project;
 use App\Models\Task;
 
 use App\Models\Department;
+use App\Models\ProjectDepartment;
 
 
 class AdminController extends Controller
@@ -30,8 +31,9 @@ class AdminController extends Controller
 
     public function projects()
     {
+        $departments = Department::all();
         $projects = Project::all();
-        return view('admin.projects',compact('projects'));
+        return view('admin.projects',compact('projects','departments'));
     }
 
     public function findUser(Request $request)
@@ -129,5 +131,96 @@ class AdminController extends Controller
         ]);
 
         return back()->with('success','Project Updated Successfully');
+    }
+
+    public function task_list($id)
+    {
+        $find_project = Project::find($id);
+
+        if(!$find_project)
+        {
+            return abort(404);
+        }
+
+        $tasks = Task::where('project_id', $id)->get();
+        $departments = Department::all();
+        $find_assign_project = ProjectDepartment::where('project_id',$id)->first();
+
+        return view('admin.tasks',compact('find_project','tasks','departments','find_assign_project'));
+    }
+
+    public function create_task(Request $request)
+    {
+        
+        $task = new Task;
+        $task->project_id   = $request->project_id;
+        $task->status_id    = 1;
+        $task->title        = $request->title;
+        $task->description  = $request->description;
+        $task->save();
+        
+        return back()->with('success','Task Created Successfully');
+    }
+
+    public function findTask(Request $request)
+    {
+        $find_task = Task::find($request->task_id);
+        return response()->json( $find_task );
+    }
+
+    public function updateTask(Request $request)
+    {
+
+        $find_task = Task::find($request->task_id);
+
+        if(!$find_task)
+        {
+            return back()->with('error','Task Not Found');
+        }
+
+        $find_task->update([
+            'title'         => $request->title, 
+            'description'   => $request->description
+        ]);
+
+        return back()->with('success','Task Updated Successfully');
+    }
+
+    public function changeTasktStatus(Request $request)
+    {
+        $find_task = Task::find($request->task_id);
+
+        if(!$find_task)
+        {
+            return back()->with('error','Task Not Found');
+        }
+
+        if($find_task->status_id == 1)
+        {
+            $status_id = 0;
+        }else if($find_task->status_id == 0)
+        {
+            $status_id = 1;
+        }
+
+        $find_task->update(['status_id'=> $status_id]);
+
+        return back()->with('success','Status Updated Successfully');
+    }
+
+    public function assignProject(Request $request)
+    {
+        $assign = new ProjectDepartment;
+        $assign->project_id     = $request->project_id;
+        $assign->department_id  = $request->department_id;
+        $assign->user_id        = Auth::id();
+        $assign->save();
+        
+        return back()->with('success','Project Assigned Successfully');
+    }
+
+    public function assignTask(Request $request)
+    {
+        return $request->all();
     }
 }
