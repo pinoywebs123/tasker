@@ -45,6 +45,15 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
 
 });
 
+Route::group(['prefix'=> 'tasker','middleware'=> 'role:tasker'], function(){
+
+    //tasker
+    Route::get('/home',[TaskerController::class, 'home'])->name('tasker_home');
+    Route::get('/{id}/task-list',[TaskerController::class, 'task_list'])->name('tasker_task_list');
+    Route::get('/{id}/update-task',[TaskerController::class, 'update_task'])->name('tasker_update_task');
+
+});
+
 
 
 

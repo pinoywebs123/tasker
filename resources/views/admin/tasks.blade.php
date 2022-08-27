@@ -179,10 +179,12 @@
                       </td>
                      
                       <td class="align-middle text-center text-sm">
-                        @if($task->status_id == 1)
-                          <span class="badge badge-sm bg-gradient-success">Active</span>
+                       @if($task->status_id == 1)
+                          <span class="badge badge-sm bg-gradient-info">Active</span>
                         @elseif($task->status_id == 0)
                           <span class="badge badge-sm bg-gradient-danger">Inactive</span>
+                        @elseif($task->status_id == 3)
+                          <span class="badge badge-sm bg-gradient-success">Completed</span>
                         @endif
                         
                       </td>

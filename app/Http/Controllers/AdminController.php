@@ -213,7 +213,7 @@ class AdminController extends Controller
         $assign = new ProjectDepartment;
         $assign->project_id     = $request->project_id;
         $assign->department_id  = $request->department_id;
-        $assign->user_id        = Auth::id();
+        $assign->user_id        = Auth::id(); //created_by
         $assign->save();
         
         return back()->with('success','Project Assigned Successfully');
