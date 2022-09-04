@@ -73,7 +73,7 @@ class AuthController extends Controller
             $user->department_id    = $validatedData['department'];
             $user->name             = $validatedData['name'];
             $user->email            = $validatedData['email'];
-            $user->password         = bcrypt($validatedData['position']);
+            $user->password         = bcrypt($validatedData['password']);
             $user->save();
 
             $user->assignRole('manager');
@@ -84,7 +84,7 @@ class AuthController extends Controller
             $user->department_id    = $validatedData['department'];
             $user->name             = $validatedData['name'];
             $user->email            = $validatedData['email'];
-            $user->password         = bcrypt($validatedData['position']);
+            $user->password         = bcrypt($validatedData['password']);
             $user->save();
 
             $user->assignRole('tasker');
