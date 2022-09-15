@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\Department;
+use App\Models\Comment;
 
 class TaskerController extends Controller
 {
@@ -17,6 +18,7 @@ class TaskerController extends Controller
                         ->join('project_departments','users.department_id','=','project_departments.department_id')
                         ->join('projects','project_departments.project_id','=','projects.id')
                         ->where('users.id', Auth::id())
+                        ->where('projects.status_id', '!=', 0)
                         ->select('projects.id','projects.title','projects.description','projects.status_id','projects.created_at')
                         ->get();
 
@@ -50,5 +52,23 @@ class TaskerController extends Controller
         $find_task->update(['status_id'=> 3]);
 
         return back()->with('success','Task is Completed.');
+    }
+
+    public function view_task($task_id,$project_id)
+    {
+        $find_project = Project::find($project_id);
+        $find_task = Task::find($task_id);
+        $comments = Comment::where('task_id', $task_id)->orderBy('id','desc')->get();
+
+        return view('tasker.view_task',compact('find_project','find_task','comments'));
+    }
+
+    public function task_comment(Request $request)
+    {
+        $comment = trim($request->comment);
+        $comment = htmlentities($comment);
+
+        Comment::create(['task_id'=> $request->task_id, 'comment'=> $comment, 'user_id' => Auth::id()]);
+        return back()->with('success','Comment Successfully.');
     }
 }    

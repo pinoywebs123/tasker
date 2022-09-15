@@ -26,8 +26,10 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
 
     //project
     Route::get('/projects',[AdminController::class, 'projects'])->name('admin_projects');
+    Route::get('/archive-projects',[AdminController::class, 'archive_projects'])->name('admin_archive_projects');
     Route::post('/projects',[AdminController::class, 'createProjects'])->name('admin_create_projects');
     Route::post('/change-projects',[AdminController::class, 'changeProjectStatus'])->name('admin_change_projects_status');
+    Route::post('/completed-projects',[AdminController::class, 'completedProject'])->name('admin_completed_project');
     Route::post('/find-project',[AdminController::class, 'findProjects'])->name('admin_find_projects');
     Route::post('/update-project',[AdminController::class, 'updateProjects'])->name('admin_update_projects');
 
@@ -51,6 +53,15 @@ Route::group(['prefix'=> 'tasker','middleware'=> 'role:tasker'], function(){
     Route::get('/home',[TaskerController::class, 'home'])->name('tasker_home');
     Route::get('/{id}/task-list',[TaskerController::class, 'task_list'])->name('tasker_task_list');
     Route::get('/{id}/update-task',[TaskerController::class, 'update_task'])->name('tasker_update_task');
+
+});
+
+
+Route::group(['prefix'=> 'tasker','middleware'=> 'auth'], function(){
+
+    //tasker
+    Route::get('/view-task/{task_id}/{project_id}',[TaskerController::class, 'view_task'])->name('share_view_task');
+    Route::post('task-comment', [TaskerController::class, 'task_comment'])->name('share_task_comment');
 
 });
 

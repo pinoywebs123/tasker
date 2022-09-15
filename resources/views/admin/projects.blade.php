@@ -28,7 +28,7 @@
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
         <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">Dashboard</span>
+        <span class="ms-1 font-weight-bold">{{Auth::user()->name}}</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -159,6 +159,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                      
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created By</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
@@ -181,9 +182,14 @@
                         @if($proj->status_id == 1)
                           <span class="badge badge-sm bg-gradient-success">Active</span>
                         @elseif($proj->status_id == 0)
-                          <span class="badge badge-sm bg-gradient-danger">Inactive</span>
+                          <span class="badge badge-sm bg-gradient-danger">Archived</span>
+                        @elseif($proj->status_id == 2)
+                          <span class="badge badge-sm bg-gradient-secondary">Completed</span>
                         @endif
                         
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{$proj->user->name}}</span>
                       </td>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{$proj->created_at->diffForHumans()}}</span>
@@ -193,6 +199,7 @@
 
                         @if($proj->status_id == 1)
                           <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}">Archive</button>
+                          <button class="btn btn-default btn-xs completed" data-bs-toggle="modal" data-bs-target="#completedModal" value="{{$proj->id}}">Completed</button>
                           <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs">View</a>
                           <button class="btn btn-primary btn-xs assign" data-bs-toggle="modal" data-bs-target="#assignsModal" value="{{$proj->id}}">Assign Department</button>
                         @elseif($proj->status_id == 0)
@@ -320,6 +327,35 @@
     </div>
   </div>
 
+  <div class="modal" id="completedModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Are you sure everything is completed?</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('admin_completed_project')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="hidden" name="project_id" id="completedProject">
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Yes</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
     <div class="modal" id="assignsModal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -385,6 +421,12 @@
       $(".archive").click(function(){
         var project_id = $(this).val();
         $("#statusProjectId").val(project_id);
+
+      });
+
+      $(".completed").click(function(){
+        var project_id = $(this).val();
+        $("#completedProject").val(project_id);
 
       });
 

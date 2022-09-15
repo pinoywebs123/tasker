@@ -45,10 +45,11 @@ class AuthController extends Controller
 
     public function register()
     {
-        $positions = Position::all();
-        $departments = Department::all();
+        return redirect()->route('login');
+        // $positions = Position::all();
+        // $departments = Department::all();
 
-        return view('auth.register',compact('positions','departments'));
+        // return view('auth.register',compact('positions','departments'));
     }
 
     public function registerCheck(Request $request)

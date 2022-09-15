@@ -27,7 +27,7 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-        <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+        <img src="{{URL::to('/assets/img/logo-ct-dark.png')}}" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold">{{Auth::user()->name}}</span>
       </a>
     </div>
@@ -101,62 +101,48 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Project Lists</h6>
-              <h5>{{$department_name->name}}</h5>
+              
+              <h3>Project Title: {{$find_project->title}}</h3>
+              <h6>Task Information</h6>
               @include('shared.notification')
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
-                      
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($projects as $proj)
-                    <tr>
-                      
-                      <td>
-                        {{$proj->title}}
-                      </td>
-                     
-                      <td>
-                        @if($proj->status_id == 1)
-                          <span class="badge badge-sm bg-gradient-success">Active</span>
-                        @elseif($proj->status_id == 0)
-                          <span class="badge badge-sm bg-gradient-danger">Inactive</span>
-                        @elseif($proj->status_id == 2)
-                          <span class="badge badge-sm bg-gradient-secondary">Completed</span>
-                        @endif
-                        
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{$proj->created_at}}</span>
-                      </td>
-                      <td class="align-middle text-center">
-                       
+                <div class="container">
+                  <h3>Task Title: {{$find_task->title}}</h3>
+                  <h6>Task Description: {{$find_task->description}}</h6>
 
-                        @if($proj->status_id == 1)
-                          
-                          <a href="{{route('tasker_task_list',$proj->id)}}" class="btn btn-warning btn-xs">View</a>
-                          
-                        @elseif($proj->status_id == 0)
-                         N/A
-                        @endif
-                        
-                      </td>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <ul class="list-group">
+                    @if($comments->count() > 0)
+                      <li class="list-group-item active" aria-current="true">Comment Lists</li>
+                      @foreach($comments as $com)
+                      <li class="list-group-item">
+                        {{$com->user->name}} : {{$com->comment}}
+                        <br>
+                        <p style="font-size: 8px;">Created: {{$com->created_at->diffForHumans()}}</p>
+                      </li>
 
-                    </tr>
-
-                    @endforeach
-
-                  </tbody>
-                </table>
+                      @endforeach  
+                    @else
+                        No Comment
+                    @endif
+                  </ul>
+                  <br>
+                  <form action="{{route('share_task_comment')}}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                      <label>Comment Here: </label>
+                      <input type="hidden" name="task_id" value="{{Request::segment(3)}}">
+                      <textarea class="form-control" name="comment" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

@@ -46,7 +46,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
             <li class="breadcrumb-item text-sm text-white active" aria-current="page">Tables</li>
           </ol>
-          
+          <h6 class="font-weight-bolder text-white mb-0">Tables</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -87,8 +87,54 @@
                     </div>
                   </a>
                 </li>
-                
-                
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="my-auto">
+                        <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">New album</span> by Travis Scott
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          1 day
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
+                        <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                          <title>credit-card</title>
+                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                              <g transform="translate(1716.000000, 291.000000)">
+                                <g transform="translate(453.000000, 454.000000)">
+                                  <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
+                                  <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </svg>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          Payment successfully completed
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          2 days
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
               </ul>
             </li>
           </ul>
@@ -102,7 +148,7 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Project Lists</h6>
-              <h5>{{$department_name->name}}</h5>
+              
               @include('shared.notification')
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -111,9 +157,10 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                     
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created By</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
                       
                     </tr>
                   </thead>
@@ -122,39 +169,37 @@
                     <tr>
                       
                       <td>
-                        {{$proj->title}}
+                        <div class="d-flex px-2 py-1">
+                          
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{$proj->title}}</h6>
+                            
+                          </div>
+                        </div>
                       </td>
                      
-                      <td>
+                      <td class="align-middle text-center text-sm">
                         @if($proj->status_id == 1)
                           <span class="badge badge-sm bg-gradient-success">Active</span>
                         @elseif($proj->status_id == 0)
-                          <span class="badge badge-sm bg-gradient-danger">Inactive</span>
+                          <span class="badge badge-sm bg-gradient-danger">Archived</span>
                         @elseif($proj->status_id == 2)
                           <span class="badge badge-sm bg-gradient-secondary">Completed</span>
                         @endif
                         
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{$proj->created_at}}</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$proj->user->name}}</span>
                       </td>
                       <td class="align-middle text-center">
-                       
-
-                        @if($proj->status_id == 1)
-                          
-                          <a href="{{route('tasker_task_list',$proj->id)}}" class="btn btn-warning btn-xs">View</a>
-                          
-                        @elseif($proj->status_id == 0)
-                         N/A
-                        @endif
-                        
+                        <span class="text-secondary text-xs font-weight-bold">{{$proj->created_at->diffForHumans()}}</span>
                       </td>
+                      
 
                     </tr>
 
                     @endforeach
-
+                    
                   </tbody>
                 </table>
               </div>
@@ -163,54 +208,10 @@
         </div>
       </div>
       
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                made with <i class="fa fa-heart"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                for a better web.
-              </div>
-            </div>
-            
-          </div>
-        </div>
-      </footer>
+      
     </div>
   </main>
-
-<div class="modal" id="deleteModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Are you sure you want to delete?</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <form action="{{route('admin_delete_user')}}" method="POST">
-        @csrf
-      <!-- Modal body -->
-      <div class="modal-body">
-        <input type="hidden" name="user_id" id="delete_user_id">
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-success">Submit</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-      </div>
-      </form>
-
-    </div>
-  </div>
-</div>
-
+  
   
   <!--   Core JS Files   -->
   <script src="{{URL::to('/assets/js/core/popper.min.js')}}"></script>
@@ -233,7 +234,45 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="text/javascript">
     $(document).ready(function(){
-      
+      var find_project_url = "{{route('admin_find_projects')}}";
+      var token = "{{Session::token()}}";
+
+      $(".archive").click(function(){
+        var project_id = $(this).val();
+        $("#statusProjectId").val(project_id);
+
+      });
+
+      $(".completed").click(function(){
+        var project_id = $(this).val();
+        $("#completedProject").val(project_id);
+
+      });
+
+      $(".assign").click(function(){
+        var project_id = $(this).val();
+        $("#assignTask").val(project_id);
+
+      });
+
+      $(".updateProject").click(function(){
+          var project_id = $(this).val();
+          $("#updateProjectId").val(project_id);
+          $.ajax({
+           type:'POST',
+           url:find_project_url,
+           data:{_token: token, project_id : project_id},
+           success:function(data) {
+              console.log(data);
+              $("#editTitle").val(data.title);
+              $("#editDescription").val(data.description);
+              
+           }
+        });
+
+
+      });
+
     });
   </script>
 </body>

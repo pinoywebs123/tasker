@@ -32,8 +32,14 @@ class AdminController extends Controller
     public function projects()
     {
         $departments = Department::all();
-        $projects = Project::all();
+        $projects = Project::where('status_id',1)->orWhere('status_id',2)->get();
         return view('admin.projects',compact('projects','departments'));
+    }
+
+    public function archive_projects()
+    {
+        $projects = Project::where('status_id', 0)->get();
+        return view('admin.archive_projects',compact('projects'));
     }
 
     public function findUser(Request $request)
@@ -210,6 +216,11 @@ class AdminController extends Controller
 
     public function assignProject(Request $request)
     {
+        $check_assign = ProjectDepartment::where('project_id',$request->project_id)->where('department_id',$request->department_id)->first();
+        if($check_assign)
+        {
+          return back()->with('error','Project Already Assigned in this departments');  
+        }
         $assign = new ProjectDepartment;
         $assign->project_id     = $request->project_id;
         $assign->department_id  = $request->department_id;
@@ -222,5 +233,17 @@ class AdminController extends Controller
     public function assignTask(Request $request)
     {
         return $request->all();
+    }
+
+    public function completedProject(Request $request)
+    {
+        $find_project = Project::find($request->project_id);
+        if(!$find_project)
+        {
+            return back()->with('error', 'Project Does not exist');
+        }
+
+        $find_project->update(['status_id'=> 2]);
+        return back()->with('success', 'Project '.$find_project->title.' Completed Successfully');
     }
 }
