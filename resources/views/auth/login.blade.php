@@ -39,6 +39,9 @@
             <div class="col-md-6 offset-md-3">
               <div class="card card-plain">
                 <div class="card-header pb-0 text-start">
+                  <center style="margin-top: -200px !important;">
+                    <img src="{{URL::to('logo.png')}}">
+                  </center>
                   <h4 class="font-weight-bolder text-center">Sign In</h4>
                   
                   @include('shared.notification')
