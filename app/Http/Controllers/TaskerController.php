@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\Department;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Storage;
 
 class TaskerController extends Controller
 {
@@ -70,5 +71,10 @@ class TaskerController extends Controller
 
         Comment::create(['task_id'=> $request->task_id, 'comment'=> $comment, 'user_id' => Auth::id()]);
         return back()->with('success','Comment Successfully.');
+    }
+
+    public function download_task(Request $request)
+    {
+        return Storage::download($request->url);
     }
 }    

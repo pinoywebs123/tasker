@@ -5,13 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class TaskFile extends Model
 {
     use HasFactory;
     protected $guarded = [];
 
-    public function download()
+    public function user()
     {
-        return $this->hasOne(TaskFile::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
     }
 }

@@ -8,10 +8,11 @@ use App\Models\User;
 use App\Models\Position;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\TaskFile;
 
 use App\Models\Department;
 use App\Models\ProjectDepartment;
-
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -157,13 +158,25 @@ class AdminController extends Controller
 
     public function create_task(Request $request)
     {
-        
+
+
+        $cover = $request->file('task_file')->getClientOriginalName();;
+       
+        $url = Storage::putFileAs('public', $request->file('task_file'),$cover);
+
         $task = new Task;
         $task->project_id   = $request->project_id;
         $task->status_id    = 1;
         $task->title        = $request->title;
         $task->description  = $request->description;
         $task->save();
+
+        $task_file = new TaskFile;
+        $task_file->task_id     = $task->id;
+        $task_file->user_id     = Auth::id();
+        $task_file->file_name   = $url;
+        $task_file->save();
+
         
         return back()->with('success','Task Created Successfully');
     }

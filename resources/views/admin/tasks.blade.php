@@ -229,7 +229,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
-        <form role="form" action="{{route('admin_create_task')}}" method="POST">
+        <form role="form" action="{{route('admin_create_task')}}" method="POST" enctype="multipart/form-data">
         <!-- Modal body -->
         <div class="modal-body">
            
@@ -242,6 +242,10 @@
         <div class="mb-3">
           <label>Task Description</label>
           <textarea class="form-control" name="description" required></textarea>
+        </div> 
+        <div class="mb-3">
+          <label>Task File</label>
+          <input type="file" name="task_file" class="form-control" required>
         </div>         
        
         </div>

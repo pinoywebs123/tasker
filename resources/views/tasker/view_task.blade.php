@@ -113,6 +113,14 @@
                   <h6>Task Description: {{$find_task->description}}</h6>
 
                   <br>
+                  <p>
+                  <form action="{{route('download_task')}}" method="POST">
+                    @csrf
+                    
+                    <input type="hidden" name="url" value="{{$find_task->download->file_name}}">
+                    <button type="submit" class="btn btn-danger btn-xs">DOWNLOAD NOW</button>
+                  </form> 
+                  </p>
                   <br>
                   <br>
                   <br>

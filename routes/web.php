@@ -38,6 +38,7 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
 
     Route::post('create-task',[AdminController::class, 'create_task'])->name('admin_create_task');
 
+
     Route::post('/find-task',[AdminController::class, 'findTask'])->name('admin_find_task');
     Route::post('/update-task',[AdminController::class, 'updateTask'])->name('admin_update_task');
     Route::post('/change-task',[AdminController::class, 'changeTasktStatus'])->name('admin_change_task_status');
@@ -62,6 +63,7 @@ Route::group(['prefix'=> 'tasker','middleware'=> 'auth'], function(){
     //tasker
     Route::get('/view-task/{task_id}/{project_id}',[TaskerController::class, 'view_task'])->name('share_view_task');
     Route::post('task-comment', [TaskerController::class, 'task_comment'])->name('share_task_comment');
+    Route::post('download-task',[TaskerController::class, 'download_task'])->name('download_task');
 
 });
 
