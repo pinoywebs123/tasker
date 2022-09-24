@@ -36,6 +36,9 @@ class AuthController extends Controller
             }else if( Auth::user()->getRoleNames()[0] == 'tasker')
             {
                 return redirect()->route('tasker_home');
+            }else if(Auth::user()->getRoleNames()[0] == 'manager_limited')
+            {
+                return redirect()->route('admin_projects');
             }
         }else 
         {
@@ -89,6 +92,17 @@ class AuthController extends Controller
             $user->save();
 
             $user->assignRole('tasker');
+
+        }else if($data['user_type'] == 4)
+        {
+            $user->position_id      = $validatedData['position'];
+            $user->department_id    = $validatedData['department'];
+            $user->name             = $validatedData['name'];
+            $user->email            = $validatedData['email'];
+            $user->password         = bcrypt($validatedData['password']);
+            $user->save();
+
+            $user->assignRole('manager_limited');
 
         }else {
             return 'Invalid User Type';

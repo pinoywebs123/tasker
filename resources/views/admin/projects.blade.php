@@ -189,10 +189,17 @@
                         
                       </td>
                       <td class="align-middle text-center">
+                        @if(Auth::user()->getRoleNames()[0] == 'manager_limited')
+                          <span class="text-secondary text-xs font-weight-bold">{{Auth::user()->name}}</span>
+                        @elseif(Auth::user()->getRoleNames()[0] == 'manager_limited')
+                          <span class="text-secondary text-xs font-weight-bold">{{$proj->user->name}}</span>
+                        @else
                         <span class="text-secondary text-xs font-weight-bold">{{$proj->user->name}}</span>
+                        @endif
+                        
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{$proj->created_at->diffForHumans()}}</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$proj->created_at}}</span>
                       </td>
                       <td class="align-middle">
                         <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$proj->id}}">Edit</button>

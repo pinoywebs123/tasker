@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Position;
 use App\Models\Project;
@@ -13,6 +14,7 @@ use App\Models\TaskFile;
 use App\Models\Department;
 use App\Models\ProjectDepartment;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Collection;
 
 class AdminController extends Controller
 {
@@ -33,7 +35,29 @@ class AdminController extends Controller
     public function projects()
     {
         $departments = Department::all();
-        $projects = Project::where('status_id',1)->orWhere('status_id',2)->get();
+
+        if(Auth::user()->getRoleNames()[0] == 'manager_limited')
+        {
+             $project_department = new Collection(DB::table('users')
+                        ->join('project_departments','users.department_id','=','project_departments.department_id')
+                        ->join('projects','project_departments.project_id','=','projects.id')
+                        ->where('users.id', Auth::id())
+                        ->where('projects.status_id', '!=', 0)
+                        ->select('projects.id','projects.title','projects.description','projects.status_id','projects.created_at','projects.user_id')
+                        ->get());
+
+            $projects_created = new Collection(Project::where('user_id', Auth::id())->select('projects.id','projects.title','projects.description','projects.status_id','projects.created_at','projects.user_id')->get());
+
+             
+
+            $projects =  $projects_created->merge($project_department);
+
+           
+        }else
+        {
+            $projects = Project::where('status_id',1)->orWhere('status_id',2)->get();
+        }
+        
         return view('admin.projects',compact('projects','departments'));
     }
 
