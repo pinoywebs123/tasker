@@ -18,6 +18,7 @@ class CreateTasksTable extends Migration
             $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('status_id');
             $table->string('title');
+            $table->string('deadline');
             $table->text('description');
             $table->timestamps();
         });

@@ -63,7 +63,13 @@ class AdminController extends Controller
 
     public function archive_projects()
     {
-        $projects = Project::where('status_id', 0)->get();
+        if(Auth::user()->getRoleNames()[0] == 'manager_limited')
+        {
+            $projects = Project::where('status_id', 0)->where('user_id',Auth::id())->get();
+        }else{
+            $projects = Project::where('status_id', 0)->get();
+        }
+        
         return view('admin.archive_projects',compact('projects'));
     }
 
@@ -193,6 +199,7 @@ class AdminController extends Controller
         $task->status_id    = 1;
         $task->title        = $request->title;
         $task->description  = $request->description;
+        $task->deadline     = $request->deadline;
         $task->save();
 
         $task_file = new TaskFile;
