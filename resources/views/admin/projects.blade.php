@@ -202,15 +202,18 @@
                         <span class="text-secondary text-xs font-weight-bold">{{$proj->created_at}}</span>
                       </td>
                       <td class="align-middle">
-                        <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$proj->id}}">Edit</button>
+                        
 
                         @if($proj->status_id == 1)
+                          <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$proj->id}}">Edit</button>
                           <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}">Archive</button>
                           <button class="btn btn-default btn-xs completed" data-bs-toggle="modal" data-bs-target="#completedModal" value="{{$proj->id}}">Completed</button>
                           <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs">View</a>
                           <button class="btn btn-primary btn-xs assign" data-bs-toggle="modal" data-bs-target="#assignsModal" value="{{$proj->id}}">Assign Department</button>
                         @elseif($proj->status_id == 0)
                           <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}">Activate</button>
+                        @elseif($proj->status_id == 2)
+                          <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs">View</a>
                         @endif
                         
                       </td>

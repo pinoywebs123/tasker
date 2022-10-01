@@ -148,7 +148,10 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Tasks Lists</h6>
-              <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
+              @if($find_project->status_id == 1)
+                <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
+              @endif
+              
               <h3>Project assign to: {{isset($find_assign_project->department->name) ? $find_assign_project->department->name : 'None'}}</h3>
               @include('shared.notification')
             </div>
