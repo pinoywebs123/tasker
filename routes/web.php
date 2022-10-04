@@ -16,6 +16,8 @@ Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'registerCheck'])->name('register');
 
 Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
+
+    
     Route::get('/home',[AdminController::class, 'home'])->name('admin_home');
     Route::get('/logout',[AdminController::class, 'logout'])->name('admin_logout');
 

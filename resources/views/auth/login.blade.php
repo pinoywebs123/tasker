@@ -50,7 +50,7 @@
                   <form role="form" action="{{route('login_check')}}" method="POST">
                     @csrf
                     <div class="mb-3">
-                      <input type="email" class="form-control form-control-lg" placeholder="Email" aria-label="Email" name="email" required>
+                      <input type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username" name="username" required>
                     </div>
                     <div class="mb-3">
                       <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" name="password" required>

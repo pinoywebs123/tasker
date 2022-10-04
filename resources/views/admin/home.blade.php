@@ -278,7 +278,7 @@
                   </div>
                   
                   <div class="text-center">
-                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Update</button>
+                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Submit</button>
                   </div>
                   
                 
@@ -339,7 +339,10 @@
                   @csrf
                   
                   <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="name" required id="name">
+                    <input type="text" class="form-control" placeholder="First Name" aria-label="Name" name="first_name" required id="first_name">
+                  </div>
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Last Name" aria-label="Name" name="last_name" required id="last_name">
                   </div>
                   <div class="mb-3">
                     <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required id="email">
@@ -384,7 +387,7 @@
                   </div>
                   
                   <div class="text-center">
-                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Update</button>
+                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Submit</button>
                   </div>
                   
                 

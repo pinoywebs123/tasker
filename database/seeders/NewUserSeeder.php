@@ -15,7 +15,9 @@ class NewUserSeeder extends Seeder
     public function run()
     {
         $manager = User::create([
-            'name'      => 'Manager',
+            'first_name'    => 'Sharmaine',
+            'last_name'     => 'Limited',
+            'username'      => 'sharmaine.limited',
             'email'     => 'manager2@yahoo.com',
             'password'  => bcrypt('manager123'),
             'position_id'    => 2,

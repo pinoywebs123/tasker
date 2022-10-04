@@ -19,12 +19,12 @@ class AuthController extends Controller
     public function loginCheck(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => ['required', 'max:255'],
+            'username' => ['required', 'max:255'],
             'password' => ['required'],
             
         ]);
 
-        if(Auth::attempt($validatedData))
+        if(Auth::attempt(['username'=> $validatedData['username'], 'password'=> $validatedData['password']]))
         {
 
             if( Auth::user()->getRoleNames()[0] == 'admin')
@@ -60,7 +60,8 @@ class AuthController extends Controller
         $validatedData = $request->validate([
             'email' => ['required', 'unique:users', 'max:255'],
             'user_type' => ['required'],
-            'name' => ['required'],
+            'first_name' => ['required'],
+            'last_name' => ['required'],
             'position' => ['required'],
             'department' => ['required'],
             'password' => ['required','max:20'],
@@ -75,7 +76,9 @@ class AuthController extends Controller
         {
             $user->position_id      = $validatedData['position'];
             $user->department_id    = $validatedData['department'];
-            $user->name             = $validatedData['name'];
+            $user->first_name       = strtolower($validatedData['first_name']);
+            $user->last_name        = strtolower($validatedData['last_name']);
+            $user->username         = strtolower($validatedData['first_name'].'.'.$validatedData['last_name']);
             $user->email            = $validatedData['email'];
             $user->password         = bcrypt($validatedData['password']);
             $user->save();
@@ -86,7 +89,9 @@ class AuthController extends Controller
         {
             $user->position_id      = $validatedData['position'];
             $user->department_id    = $validatedData['department'];
-            $user->name             = $validatedData['name'];
+            $user->first_name       = strtolower($validatedData['first_name']);
+            $user->last_name        = strtolower($validatedData['last_name']);
+            $user->username         = strtolower($validatedData['first_name'].'.'.$validatedData['last_name']);
             $user->email            = $validatedData['email'];
             $user->password         = bcrypt($validatedData['password']);
             $user->save();
@@ -97,7 +102,9 @@ class AuthController extends Controller
         {
             $user->position_id      = $validatedData['position'];
             $user->department_id    = $validatedData['department'];
-            $user->name             = $validatedData['name'];
+            $user->first_name       = strtolower($validatedData['first_name']);
+            $user->last_name        = strtolower($validatedData['last_name']);
+            $user->username         = strtolower($validatedData['first_name'].'.'.$validatedData['last_name']);
             $user->email            = $validatedData['email'];
             $user->password         = bcrypt($validatedData['password']);
             $user->save();

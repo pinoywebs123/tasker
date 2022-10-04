@@ -18,6 +18,7 @@ use Illuminate\Support\Collection;
 
 class AdminController extends Controller
 {
+   
     public function home()
     {
         $positions = Position::all();
