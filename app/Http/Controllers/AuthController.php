@@ -24,7 +24,7 @@ class AuthController extends Controller
             
         ]);
 
-        if(Auth::attempt(['username'=> $validatedData['username'], 'password'=> $validatedData['password']]))
+        if(Auth::attempt(['username'=> strtolower($validatedData['username']), 'password'=> $validatedData['password']]))
         {
 
             if( Auth::user()->getRoleNames()[0] == 'admin')
