@@ -161,6 +161,8 @@
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created By</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project Type</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deadline</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -190,16 +192,22 @@
                       </td>
                       <td class="align-middle text-center">
                         @if(Auth::user()->getRoleNames()[0] == 'manager_limited')
-                          <span class="text-secondary text-xs font-weight-bold">{{Auth::user()->name}}</span>
+                          <span class="text-secondary text-xs font-weight-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
                         @elseif(Auth::user()->getRoleNames()[0] == 'manager_limited')
-                          <span class="text-secondary text-xs font-weight-bold">{{$proj->user->name}}</span>
+                          <span class="text-secondary text-xs font-weight-bold">{{$proj->user->first_name}} {{Auth::user()->last_name}}</span>
                         @else
-                        <span class="text-secondary text-xs font-weight-bold">{{$proj->user->name}}</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$proj->user->first_name}} {{Auth::user()->last_name}}</span>
                         @endif
                         
                       </td>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{$proj->created_at}}</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{$proj->project_type}}</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{$proj->deadline}}</span>
                       </td>
                       <td class="align-middle">
                         
@@ -209,7 +217,7 @@
                           <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}">Archive</button>
                           <button class="btn btn-default btn-xs completed" data-bs-toggle="modal" data-bs-target="#completedModal" value="{{$proj->id}}">Completed</button>
                           <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs">View</a>
-                          <button class="btn btn-primary btn-xs assign" data-bs-toggle="modal" data-bs-target="#assignsModal" value="{{$proj->id}}">Assign Department</button>
+                         <!--  <button class="btn btn-primary btn-xs assign" data-bs-toggle="modal" data-bs-target="#assignsModal" value="{{$proj->id}}">Assign Department</button> -->
                         @elseif($proj->status_id == 0)
                           <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}">Activate</button>
                         @elseif($proj->status_id == 2)
@@ -248,6 +256,31 @@
         <div class="modal-body">
            
         @csrf
+
+        <div class="mb-3">
+          <label>Project Deadline</label>
+          <input type="date" class="form-control" name="deadline" required >
+        </div>
+
+        <div class="mb-3">
+          <label>Project Type</label>
+           <select class="form-control" required name="project_type">
+             <option value="ISA">ISA</option>
+             <option value="Accreditation Project">Accreditation Project</option>
+             
+           </select>
+        </div>
+
+        <div class="form-group">
+          <label>Select Department</label>
+          <select class="form-control" name="department_id" required>
+            <option></option>
+            @foreach($departments as $dept)
+              <option value="{{$dept->id}}">{{$dept->name}}</option>
+            @endforeach
+          </select>
+        </div>
+
         <div class="mb-3">
           <label>Project Name</label>
           <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="name">

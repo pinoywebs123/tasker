@@ -18,7 +18,7 @@ use Illuminate\Support\Collection;
 
 class AdminController extends Controller
 {
-   
+
     public function home()
     {
         $positions = Position::all();
@@ -117,11 +117,15 @@ class AdminController extends Controller
     public function createProjects(Request $request)
     {
         $proj = new Project;
-        $proj->user_id      = Auth::id();
-        $proj->status_id    = 1;
-        $proj->title        = $request->title;
-        $proj->description  = $request->description;
+        $proj->user_id        = Auth::id();
+        $proj->status_id      = 1;
+        $proj->title          = $request->title;
+        $proj->deadline       = $request->deadline;
+        $proj->project_type   = $request->project_type;
+        $proj->description    = $request->description;
         $proj->save();
+
+        $this->assignProject($proj->id, $request->department_id);
        
         return back()->with('success','Created Successfully');
     }
@@ -259,16 +263,16 @@ class AdminController extends Controller
         return back()->with('success','Status Updated Successfully');
     }
 
-    public function assignProject(Request $request)
+    public function assignProject($project_id, $department_id)
     {
-        $check_assign = ProjectDepartment::where('project_id',$request->project_id)->where('department_id',$request->department_id)->first();
+        $check_assign = ProjectDepartment::where('project_id',$project_id)->where('department_id',$department_id)->first();
         if($check_assign)
         {
           return back()->with('error','Project Already Assigned in this departments');  
         }
         $assign = new ProjectDepartment;
-        $assign->project_id     = $request->project_id;
-        $assign->department_id  = $request->department_id;
+        $assign->project_id     = $project_id;
+        $assign->department_id  = $department_id;
         $assign->user_id        = Auth::id(); //created_by
         $assign->save();
         
