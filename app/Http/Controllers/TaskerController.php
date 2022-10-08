@@ -62,7 +62,7 @@ class TaskerController extends Controller
         $find_task = Task::find($task_id);
         $comments = Comment::where('task_id', $task_id)->orderBy('id','desc')->get();
 
-        $task_files = TaskFile::where('task_id', $task_id)->get();
+        $task_files = TaskFile::where('task_id', $task_id)->where('file_name','!=','null')->get();
 
         return view('tasker.view_task',compact('find_project','find_task','comments','task_files'));
     }

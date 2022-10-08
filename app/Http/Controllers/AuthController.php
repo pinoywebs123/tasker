@@ -111,6 +111,19 @@ class AuthController extends Controller
 
             $user->assignRole('manager_limited');
 
+        }else if($data['user_type'] == 5)
+        {
+            $user->position_id      = $validatedData['position'];
+            $user->department_id    = $validatedData['department'];
+            $user->first_name       = strtolower($validatedData['first_name']);
+            $user->last_name        = strtolower($validatedData['last_name']);
+            $user->username         = strtolower($validatedData['first_name'].'.'.$validatedData['last_name']);
+            $user->email            = $validatedData['email'];
+            $user->password         = bcrypt($validatedData['password']);
+            $user->save();
+
+            $user->assignRole('admin');
+
         }else {
             return 'Invalid User Type';
         }

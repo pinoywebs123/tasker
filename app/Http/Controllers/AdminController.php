@@ -195,9 +195,14 @@ class AdminController extends Controller
     {
 
 
-        $cover = $request->file('task_file')->getClientOriginalName();;
+       if(isset($request->task_file))
+       {
+            $cover = $request->file('task_file')->getClientOriginalName();;
        
-        $url = Storage::putFileAs('public', $request->file('task_file'),$cover);
+            $url = Storage::putFileAs('public', $request->file('task_file'),$cover);
+       }else {
+        $url = 'null';
+       }
 
         $task = new Task;
         $task->project_id   = $request->project_id;
