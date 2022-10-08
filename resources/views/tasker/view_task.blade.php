@@ -216,8 +216,8 @@
         <div class="modal-body">
            
         @csrf
-        <input type="text" name="project_id" value="{{Request::segment(4)}}">
-        <input type="text" name="task_id" value="{{Request::segment(3)}}">
+        <input type="hidden" name="project_id" value="{{Request::segment(4)}}">
+        <input type="hidden" name="task_id" value="{{Request::segment(3)}}">
          <div class="mb-3">
           <label>Task Type</label>
            <select class="form-control" required>
@@ -236,7 +236,7 @@
 
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn bg-gradient-primary">Yes</button>
+          <button type="submit" class="btn bg-gradient-primary">Submit</button>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
         </div>
         </form>
