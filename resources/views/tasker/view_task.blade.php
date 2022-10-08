@@ -114,12 +114,25 @@
 
                   <br>
                   <p>
-                  <form action="{{route('download_task')}}" method="POST">
-                    @csrf
-                    
-                    <input type="hidden" name="url" value="{{$find_task->download->file_name}}">
-                    <button type="submit" class="btn btn-danger btn-xs">DOWNLOAD NOW</button>
-                  </form> 
+                    @foreach($task_files as $file)
+                      <form action="{{route('download_task')}}" method="POST">
+                        @csrf
+                        
+                        <input type="hidden" name="url" value="{{$file->file_name}}">
+                        <p>
+                          <?php 
+                            $file_name = explode("/",$file->file_name);
+                            echo $file_name[1];
+                          ?>
+                         
+                        </p>
+                        <button type="submit" class="btn btn-danger btn-xs">DOWNLOAD NOW</button>
+                      </form>
+
+                    @endforeach
+                  
+
+                  <button class="btn btn-primary btn-xs upload" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload</button> 
                   </p>
                   <br>
                   <br>
@@ -187,6 +200,50 @@
     </div>
   </div>
 </div>
+
+ <div class="modal" id="uploadModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Change Status?</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('upload_task')}}" method="POST" enctype="multipart/form-data">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="text" name="project_id" value="{{Request::segment(4)}}">
+        <input type="text" name="task_id" value="{{Request::segment(3)}}">
+         <div class="mb-3">
+          <label>Task Type</label>
+           <select class="form-control" required>
+             <option>Photo</option>
+             <option>Document</option>
+             <option>Physical Task</option>
+           </select>
+        </div>
+
+        <div class="mb-3">
+          <label>Task File</label>
+          <input type="file" name="task_file" class="form-control" required>
+        </div> 
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Yes</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
 
   
   <!--   Core JS Files   -->

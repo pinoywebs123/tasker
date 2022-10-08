@@ -66,6 +66,7 @@ Route::group(['prefix'=> 'tasker','middleware'=> 'auth'], function(){
     Route::get('/view-task/{task_id}/{project_id}',[TaskerController::class, 'view_task'])->name('share_view_task');
     Route::post('task-comment', [TaskerController::class, 'task_comment'])->name('share_task_comment');
     Route::post('download-task',[TaskerController::class, 'download_task'])->name('download_task');
+    Route::post('upload-task',[TaskerController::class, 'upload_task'])->name('upload_task');
 
 });
 

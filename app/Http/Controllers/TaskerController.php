@@ -10,6 +10,7 @@ use App\Models\Task;
 use App\Models\Department;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Storage;
+use App\Models\TaskFile;
 
 class TaskerController extends Controller
 {
@@ -61,7 +62,9 @@ class TaskerController extends Controller
         $find_task = Task::find($task_id);
         $comments = Comment::where('task_id', $task_id)->orderBy('id','desc')->get();
 
-        return view('tasker.view_task',compact('find_project','find_task','comments'));
+        $task_files = TaskFile::where('task_id', $task_id)->get();
+
+        return view('tasker.view_task',compact('find_project','find_task','comments','task_files'));
     }
 
     public function task_comment(Request $request)
@@ -76,5 +79,22 @@ class TaskerController extends Controller
     public function download_task(Request $request)
     {
         return Storage::download($request->url);
+    }
+
+    public function upload_task(Request $request)
+    {
+        $cover = $request->file('task_file')->getClientOriginalName();;
+       
+        $url = Storage::putFileAs('public', $request->file('task_file'),$cover);
+
+
+        $task_file = new TaskFile;
+        $task_file->task_id     = $request->task_id;
+        $task_file->user_id     = Auth::id();
+        $task_file->file_name   = $url;
+        $task_file->save();
+
+        
+        return back()->with('success','Task Files Uploaded Successfully');
     }
 }    
