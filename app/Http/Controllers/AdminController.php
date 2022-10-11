@@ -86,19 +86,24 @@ class AdminController extends Controller
         if($request->password == null){
             $find_user->position_id     = $request->position;
             $find_user->department_id   = $request->department;
-            $find_user->name            = $request->name;
+            $find_user->first_name      = $request->first_name;
+            $find_user->last_name       = $request->last_name;
             $find_user->email           = $request->email;
-            $find_user->save();
+            $find_user->username        = strtolower($request->first_name.'.'.$request->last_name);
         }else 
         {
             $find_user->position_id     = $request->position;
             $find_user->department_id   = $request->department;
-            $find_user->name            = $request->name;
+            $find_user->first_name      = $request->first_name;
+            $find_user->last_name       = $request->last_name;
             $find_user->email           = $request->email;
             $find_user->password        = bcrypt($request->password);
-            $find_user->save(); 
+            $find_user->username        = strtolower($request->first_name.'.'.$request->last_name);
+             
         }
 
+        $find_user->save();
+        
         return back()->with('success','Updated Successfully');
             
     }
