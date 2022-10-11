@@ -44,10 +44,10 @@ class AdminController extends Controller
                         ->join('projects','project_departments.project_id','=','projects.id')
                         ->where('users.id', Auth::id())
                         ->where('projects.status_id', '!=', 0)
-                        ->select('projects.id','projects.title','projects.description','projects.status_id','projects.created_at','projects.user_id')
+                        ->select('projects.id','projects.title','projects.description','projects.status_id','projects.created_at','projects.user_id','projects.project_type','projects.deadline')
                         ->get());
 
-            $projects_created = new Collection(Project::where('user_id', Auth::id())->select('projects.id','projects.title','projects.description','projects.status_id','projects.created_at','projects.user_id')->get());
+            $projects_created = new Collection(Project::where('user_id', Auth::id())->select('projects.id','projects.title','projects.description','projects.status_id','projects.created_at','projects.user_id','projects.project_type','projects.deadline')->get());
 
              
 
