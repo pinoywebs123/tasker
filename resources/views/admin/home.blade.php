@@ -331,20 +331,23 @@
                     <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required id="email">
                   </div>
 
+                  
+
+
                   <div class="mb-3">
-                    <label>Select User Type</label>
-                    <select class="form-control" name="user_type" required>
-                      <option value="5">Admin</option>
-                      <option value="1">Project Manager/OI</option>
-                      <option value="4">Project Manager Limited</option>
-                      <option value="2">Tasker</option>
+                    <label>Select Department</label>
+                    <select class="form-control" name="department" required id="department_create">
+                      <option value="0"></option>
+                       @foreach($departments as $dept)
+                        <option value="{{$dept->id}}">{{$dept->name}}</option>
+                      @endforeach
                     </select>
                   </div>
 
-
                   <div class="mb-3">
                     <label>Select Position</label>
-                    <select class="form-control" name="position" required id="position">
+                    <select class="form-control" name="position" required id="position_create" disabled>
+                      <option></option>
                       @foreach($positions as $post)
                         <option value="{{$post->id}}">{{$post->name}}</option>
                       @endforeach
@@ -352,13 +355,17 @@
                   </div>
 
                   <div class="mb-3">
-                    <label>Select Department</label>
-                    <select class="form-control" name="department" required id="department">
-                       @foreach($departments as $dept)
-                        <option value="{{$dept->id}}">{{$dept->name}}</option>
-                      @endforeach
+                    <label>Select User Type</label>
+                    <select class="form-control" name="user_type" required disabled id="user_type_create">
+                      <option value="0"></option>
+                      <option value="5">Admin</option>
+                      <option value="1">Project Manager/OI</option>
+                      <option value="4">Project Manager Limited</option>
+                      <option value="2">Tasker</option>
                     </select>
                   </div>
+
+                  
 
                   <div class="mb-3">
                     <label>Password</label>
@@ -433,6 +440,50 @@
           var user_id = $(this).val();
           $("#delete_user_id").val(user_id);
       });
+
+      $("#department_create").change(function(){
+        var department_id = $(this).val();
+        
+        if(department_id >= 1) {
+          $("#position_create").removeAttr("disabled");
+        }else {
+          $("#position_create").attr('disabled', 'disabled');
+        }
+      });
+
+      $("#position_create").change(function(){
+        var department_id = $("#department_create").val();
+        var position_id = $(this).val();
+        console.log("department: " + department_id);
+        console.log("position: "+position_id);
+        if(department_id == 1 && position_id == 1) {
+          $("#user_type_create").val(5);
+          $("#user_type_create").removeAttr("disabled");
+        }else if(department_id == 1 && position_id == 2){
+          $("#user_type_create").val(5);
+          $("#user_type_create").removeAttr("disabled");
+        }else if(department_id == 1 && position_id == 3){
+          $("#user_type_create").val(1);
+          $("#user_type_create").removeAttr("disabled");
+        }else if(department_id > 1 && position_id == 3 ) {
+          $("#user_type_create").val(2);
+          $("#user_type_create").removeAttr("disabled");
+        }else if(department_id > 1 && position_id == 6){
+           $("#user_type_create").val(2);
+           $("#user_type_create").removeAttr("disabled");
+        }else if(department_id > 1 && position_id == 2){
+          $("#user_type_create").val(4);
+          $("#user_type_create").removeAttr("disabled");
+        }else {
+          $("#user_type_create").val(0);
+          $("#position_create").attr('disabled', 'disabled');
+        } 
+
+        
+
+         
+      });
+
     });
   </script>
 </body>

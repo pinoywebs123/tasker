@@ -147,7 +147,7 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Project Lists</h6>
+              <h6>Lists of Reports</h6>
               <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
               @include('shared.notification')
             </div>
@@ -258,12 +258,12 @@
         @csrf
 
         <div class="mb-3">
-          <label>Project Deadline</label>
+          <label>Report Deadline</label>
           <input type="date" class="form-control" name="deadline" required >
         </div>
 
         <div class="mb-3">
-          <label>Project Type</label>
+          <label>Report Type</label>
            <select class="form-control" required name="project_type">
              <option value="ISA">ISA</option>
              <option value="Accreditation Project">Accreditation Project</option>
@@ -282,11 +282,11 @@
         </div>
 
         <div class="mb-3">
-          <label>Project Name</label>
+          <label>Report Name</label>
           <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="name">
         </div> 
         <div class="mb-3">
-          <label>Project Description</label>
+          <label>Report Description</label>
           <textarea class="form-control" name="description" required></textarea>
         </div>         
        
@@ -320,11 +320,11 @@
         @csrf
         <input type="hidden" name="project_id" id="updateProjectId">
         <div class="mb-3">
-          <label>Project Name</label>
+          <label>Report Name</label>
           <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="editTitle">
         </div> 
         <div class="mb-3">
-          <label>Project Description</label>
+          <label>Report Description</label>
           <textarea class="form-control" name="description" required id="editDescription"></textarea>
         </div>         
        

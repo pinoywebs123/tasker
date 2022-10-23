@@ -111,7 +111,8 @@
                 <div class="container">
                   <h3>Task Title: {{$find_task->title}}</h3>
                   <h6>Task Description: {{$find_task->description}}</h6>
-
+                  <br>
+                  <h3>Report Files</h3>
                   <br>
                   <p>
                     @foreach($task_files as $file)

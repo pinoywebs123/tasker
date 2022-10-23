@@ -147,7 +147,7 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Project Lists</h6>
+              <h6>List of Archived Reports</h6>
               
               @include('shared.notification')
             </div>
@@ -189,11 +189,21 @@
                         
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{$proj->user->name}}</span>
+                         @if(Auth::user()->getRoleNames()[0] == 'manager_limited')
+                          <span class="text-secondary text-xs font-weight-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
+                        @elseif(Auth::user()->getRoleNames()[0] == 'manager_limited')
+                          <span class="text-secondary text-xs font-weight-bold">{{$proj->user->first_name}} {{Auth::user()->last_name}}</span>
+                        @else
+                        <span class="text-secondary text-xs font-weight-bold">{{$proj->user->first_name}} {{Auth::user()->last_name}}</span>
+                        @endif
                       </td>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{$proj->created_at->diffForHumans()}}</span>
                       </td>
+                      <td class="align-middle text-center">
+                        <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs">View</a>
+                      </td>
+                      
                       
 
                     </tr>

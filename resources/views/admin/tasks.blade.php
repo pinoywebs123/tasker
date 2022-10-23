@@ -152,7 +152,7 @@
                 <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
               @endif
               
-              <h3>Project assign to: {{isset($find_assign_project->department->name) ? $find_assign_project->department->name : 'None'}}</h3>
+              <h3>Project assign to: {{isset($find_assign_project->department->name) ? 'Report of '.$find_assign_project->department->name : 'None'}}</h3>
               @include('shared.notification')
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -199,15 +199,22 @@
                         <span class="text-secondary text-xs font-weight-bold">{{$task->deadline}}</span>
                       </td>
                       <td class="align-middle">
-                        <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$task->id}}">Edit</button>
 
-                        @if($task->status_id == 1)
-                          <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}">Archive</button>
-                        
+                        @if($find_assign_project->status_id == 1)
+                           <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$task->id}}">Edit</button>
+
+                          @if($task->status_id == 1)
+                            <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}">Archive</button>
+                          
+                             <a href="{{route('share_view_task',['task_id' => $task->id, 'project_id'=> Request::Segment(2)])}}" class="btn btn-info btn-xs">View</a>
+                          @elseif($task->status_id == 0)
+                            <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}">Activate</button>
+                          @endif
+                        @else
                            <a href="{{route('share_view_task',['task_id' => $task->id, 'project_id'=> Request::Segment(2)])}}" class="btn btn-info btn-xs">View</a>
-                        @elseif($task->status_id == 0)
-                          <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}">Activate</button>
                         @endif
+
+                       
 
                       </td>
 
