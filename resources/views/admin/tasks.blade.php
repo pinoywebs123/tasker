@@ -152,7 +152,7 @@
                 <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
               @endif
               
-              <h3>Project assign to: {{isset($find_assign_project->department->name) ? 'Report of '.$find_assign_project->department->name : 'None'}}</h3>
+              <h3>{{$find_assign_project->project->project_type}} to {{isset($find_assign_project->department->name) ? 'Report of '.$find_assign_project->department->name : 'None'}}</h3>
               @include('shared.notification')
             </div>
             <div class="card-body px-0 pt-0 pb-2">

@@ -265,8 +265,8 @@
         <div class="mb-3">
           <label>Report Type</label>
            <select class="form-control" required name="project_type">
-             <option value="ISA">ISA</option>
-             <option value="Accreditation Project">Accreditation Project</option>
+             <option value="ISA Report">ISA Report</option>
+             <option value="Accreditation Report">Accreditation Report</option>
              
            </select>
         </div>

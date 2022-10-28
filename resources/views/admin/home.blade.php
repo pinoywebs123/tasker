@@ -354,7 +354,7 @@
                     </select>
                   </div>
 
-                  <div class="mb-3">
+                  <div class="mb-3" style="display: none;">
                     <label>Select User Type</label>
                     <select class="form-control" name="user_type" required disabled id="user_type_create">
                       <option value="0"></option>
