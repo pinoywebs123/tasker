@@ -263,23 +263,15 @@
 
                   <div class="mb-3">
                     <label>Select Position</label>
-                    <select class="form-control" name="position" required id="position_create" disabled>
-                      <option></option>
-                      @foreach($positions as $post)
-                        <option value="{{$post->id}}">{{$post->name}}</option>
-                      @endforeach
+                    <select class="form-control" name="position" required id="position_create">
+                      
                     </select>
                   </div>
 
-                  <div class="mb-3" style="display: none;">
+                  <div class="mb-3">
                     <label>Select User Type</label>
-                    <select class="form-control" name="user_type" required disabled id="user_type_create">
-                      <option value="0"></option>
-                      <option value="5">Admin</option>
-                      <option value="1">Project Manager/OI</option>
-                      <option value="4">Project Manager Limited</option>
-                      <option value="2">Tasker</option>
-                    </select>
+                    <input type="hidden" name="user_type" id="user_type_create_value">
+                    <p id="user_type_create" style="margin-left: 10px;"></p>
                   </div>
 
                   
@@ -358,45 +350,51 @@
           $("#delete_user_id").val(user_id);
       });
 
+      var department_create_url = "{{route('admin_department_create')}}";
+
       $("#department_create").change(function(){
         var department_id = $(this).val();
+
+        $.ajax({
+           type:'POST',
+           url:department_create_url,
+           data:{_token: token, department_id : department_id},
+           success:function(data) {
+              $("#position_create").empty();
+              console.log(data);
+              $('#position_create').append('<option></option>');
+              $.each(data, function (i, item) {
+                  $('#position_create').append($('<option>', { 
+                      value: item.position_id,
+                      text : item.position_name 
+                  }));
+                  console.log(item.position_name);
+              });
+             
+           }
+        });
         
-        if(department_id >= 1) {
-          $("#position_create").removeAttr("disabled");
-        }else {
-          $("#position_create").attr('disabled', 'disabled');
-        }
       });
 
-      $("#position_create").change(function(){
-        var department_id = $("#department_create").val();
-        var position_id = $(this).val();
-        console.log("department: " + department_id);
-        console.log("position: "+position_id);
-        if(department_id == 1 && position_id == 1) {
-          $("#user_type_create").val(5);
-          $("#user_type_create").removeAttr("disabled");
-        }else if(department_id == 1 && position_id == 2){
-          $("#user_type_create").val(5);
-          $("#user_type_create").removeAttr("disabled");
-        }else if(department_id == 1 && position_id == 3){
-          $("#user_type_create").val(1);
-          $("#user_type_create").removeAttr("disabled");
-        }else if(department_id > 1 && position_id == 3 ) {
-          $("#user_type_create").val(2);
-          $("#user_type_create").removeAttr("disabled");
-        }else if(department_id > 1 && position_id == 6){
-           $("#user_type_create").val(2);
-           $("#user_type_create").removeAttr("disabled");
-        }else if(department_id > 1 && position_id == 2){
-          $("#user_type_create").val(4);
-          $("#user_type_create").removeAttr("disabled");
-        }else {
-          $("#user_type_create").val(0);
-          $("#position_create").attr('disabled', 'disabled');
-        } 
+      var position_create_url = "{{route('admin_position_create')}}";
 
-        
+      $("#position_create").change(function(){
+        var position_id = $(this).val();
+        var department_id = $('#department_create').val();
+       
+       $.ajax({
+           type:'POST',
+           url:position_create_url,
+           data:{_token: token, position_id : position_id, department_id: department_id},
+           success:function(data) {
+              $("#user_type_create").empty();
+              console.log(data);
+              
+              $("#user_type_create").text(data.role_name);
+              $("#user_type_create_value").val(data.role_id);
+             
+           }
+        });
 
          
       });

@@ -72,7 +72,7 @@ class AuthController extends Controller
 
         $user = new User;
 
-        if($data['user_type'] == 1)
+        if($data['user_type'] == 2)
         {
             $user->position_id      = $validatedData['position'];
             $user->department_id    = $validatedData['department'];
@@ -85,7 +85,7 @@ class AuthController extends Controller
 
             $user->assignRole('manager');
             
-        }else if($data['user_type'] == 2)
+        }else if($data['user_type'] == 3)
         {
             $user->position_id      = $validatedData['position'];
             $user->department_id    = $validatedData['department'];
@@ -111,7 +111,7 @@ class AuthController extends Controller
 
             $user->assignRole('manager_limited');
 
-        }else if($data['user_type'] == 5)
+        }else if($data['user_type'] == 1)
         {
             $user->position_id      = $validatedData['position'];
             $user->department_id    = $validatedData['department'];

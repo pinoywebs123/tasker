@@ -107,9 +107,10 @@
                       <li class="list-group-item active" aria-current="true">Comment Lists</li>
                       @foreach($comments as $com)
                       <li class="list-group-item">
-                        {{$com->user->name}} : {{$com->comment}}
+                        {{$com->comment}}
                         <br>
-                        <p style="font-size: 8px;">Created: {{$com->created_at->diffForHumans()}}</p>
+                      
+                        <p style="font-size: 8px;">{{$com->user->username}} at {{$com->created_at->diffForHumans()}}</p>
                       </li>
 
                       @endforeach  

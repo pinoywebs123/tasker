@@ -117,18 +117,21 @@
                       </td>
                       <td class="align-middle">
 
-                        @if($find_assign_project->status_id == 1)
+                        @if($find_assign_project->project->status_id == 1)
                            <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$task->id}}">Edit</button>
 
                           @if($task->status_id == 1)
-                            <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}">Archive</button>
+                            <button class="btn btn-primary btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}">Archive</button>
                           
                              <a href="{{route('share_view_task',['task_id' => $task->id, 'project_id'=> Request::Segment(2)])}}" class="btn btn-info btn-xs">View</a>
+
+                            <button class="btn btn-danger btn-xs delete"  data-bs-toggle="modal" data-bs-target="#deleteModal" value="{{$task->id}}">Delete</button>
+
                           @elseif($task->status_id == 0)
                             <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}">Activate</button>
+                            
                           @endif
-                        @else
-                           <a href="{{route('share_view_task',['task_id' => $task->id, 'project_id'=> Request::Segment(2)])}}" class="btn btn-info btn-xs">View</a>
+                        
                         @endif
 
                        
@@ -167,19 +170,19 @@
         @csrf
         <input type="hidden" name="project_id" value="{{Request::segment(2)}}">
         <div class="mb-3">
-          <label>Task Name</label>
+          <label>Report Name</label>
           <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="name">
         </div> 
         <div class="mb-3">
-          <label>Task Description</label>
+          <label>Report Description</label>
           <textarea class="form-control" name="description" required></textarea>
         </div> 
         <div class="mb-3">
-          <label>Task Deadline</label>
+          <label>Report Deadline</label>
           <input type="date" class="form-control" name="deadline" required >
         </div>
         <div class="mb-3">
-          <label>Task Type</label>
+          <label>Report Type</label>
            <select class="form-control" required>
              <option>Photo</option>
              <option>Document</option>
@@ -187,7 +190,7 @@
            </select>
           </div>
         <div class="mb-3">
-          <label>Task File</label>
+          <label>Report File</label>
           <input type="file" name="task_file" class="form-control">
         </div>         
        
@@ -271,6 +274,35 @@
     </div>
   </div>
 
+  <div class="modal" id="deleteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Are you sure to delete?</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('admin_delete_task')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="hidden" name="task_id" id="deleteProjectId">
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Yes</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
 
   
   <!--   Core JS Files   -->
@@ -300,6 +332,12 @@
       $(".archive").click(function(){
         var task_id = $(this).val();
         $("#statusProjectId").val(task_id);
+
+      });
+
+       $(".delete").click(function(){
+        var task_id = $(this).val();
+        $("#deleteProjectId").val(task_id);
 
       });
 

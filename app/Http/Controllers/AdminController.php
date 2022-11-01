@@ -10,6 +10,7 @@ use App\Models\Position;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskFile;
+use App\Models\Assign;
 
 use App\Models\Department;
 use App\Models\ProjectDepartment;
@@ -245,7 +246,8 @@ class AdminController extends Controller
 
         $find_task->update([
             'title'         => $request->title, 
-            'description'   => $request->description
+            'description'   => $request->description,
+            'deadline'      => $request->deadline
         ]);
 
         return back()->with('success','Task Updated Successfully');
@@ -271,6 +273,20 @@ class AdminController extends Controller
         $find_task->update(['status_id'=> $status_id]);
 
         return back()->with('success','Status Updated Successfully');
+    }
+
+    public function deleteTask(Request $request)
+    {
+        $find_task = Task::find($request->task_id);
+
+        if(!$find_task)
+        {
+            return back()->with('error','Task Not Found');
+        }
+
+        $find_task->delete();
+        return back()->with('success','Task deleted Successfully');
+
     }
 
     public function assignProject($project_id, $department_id)
@@ -304,5 +320,68 @@ class AdminController extends Controller
 
         $find_project->update(['status_id'=> 2]);
         return back()->with('success', 'Project '.$find_project->title.' Completed Successfully');
+    }
+
+    public function system_maintenance()
+    {
+        $roles = DB::table('roles')->get();
+        $departments = Department::all();
+        $positions = Position::all();
+
+        return view('admin.maintenance',compact('roles','departments','positions'));
+    }
+
+    public function createDepartment(Request $request)
+    {
+       Department::create(['name'=> $request->name]);
+       return back()->with('success', 'Department Created Successfully');
+    }
+
+    public function createPosition(Request $request)
+    {
+        Position::create(['name'=> $request->name]);
+        return back()->with('success', 'Department Created Successfully');
+    }
+
+    public function delete_department($id)
+    {
+        Department::where('id', $id)->delete();
+        return back()->with('success', 'Department Deleted Successfully');
+    }
+
+    public function delete_position($id)
+    {
+        Position::where('id', $id)->delete();
+        return back()->with('success', 'Position Deleted Successfully');
+    }
+
+    public function assignUser(Request $request)
+    {
+        Assign::create($request->all());
+        return back()->with('success', 'Assigned Successfully');
+    }
+
+    public function department_create(Request $request)
+    {
+        
+        $get_positions = DB::table('assigns')
+                        ->join('positions','positions.id','=','assigns.position_id')
+                        ->where('assigns.department_id', $request->department_id)
+                        ->select('assigns.id as id','assigns.position_id as position_id','positions.name as position_name')
+                        ->get();
+
+        return response()->json($get_positions);
+    }
+
+    public function position_create(Request $request)
+    {
+        $get_roles = DB::table('assigns')
+                        ->join('roles','roles.id','=','assigns.role_id')
+                        ->where('assigns.department_id', $request->department_id)
+                        ->where('assigns.position_id', $request->position_id)
+                        ->select('assigns.id as id','assigns.role_id as role_id','roles.name as role_name')
+                        ->first();
+
+        return response()->json($get_roles);
     }
 }

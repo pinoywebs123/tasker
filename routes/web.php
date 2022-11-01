@@ -37,8 +37,11 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
 
     //task
     Route::get('/{id}/task-list',[AdminController::class, 'task_list'])->name('admin_task_list');
-
     Route::post('create-task',[AdminController::class, 'create_task'])->name('admin_create_task');
+
+    //Ajax
+    Route::post('department-create',[AdminController::class, 'department_create'])->name('admin_department_create');
+    Route::post('position-create',[AdminController::class, 'position_create'])->name('admin_position_create');
 
 
     Route::post('/find-task',[AdminController::class, 'findTask'])->name('admin_find_task');
@@ -46,6 +49,15 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
     Route::post('/change-task',[AdminController::class, 'changeTasktStatus'])->name('admin_change_task_status');
     Route::post('/assign-project',[AdminController::class, 'assignProject'])->name('admin_assign_project');
     Route::post('/assign-task',[AdminController::class, 'assignTask'])->name('admin_assign_task');
+    Route::post('/delete-task',[AdminController::class, 'deleteTask'])->name('admin_delete_task');
+
+    //system maintenance
+    Route::get('/system-maintenance',[AdminController::class, 'system_maintenance'])->name('admin_system_maintenance');
+    Route::post('/create-department',[AdminController::class, 'createDepartment'])->name('admin_create_department');
+    Route::post('/create-position',[AdminController::class, 'createPosition'])->name('admin_create_position');
+    Route::get('/delete-department/{id}',[AdminController::class, 'delete_department'])->name('admin_delete_department');
+    Route::get('/delete-position/{id}',[AdminController::class, 'delete_position'])->name('admin_delete_position');
+    Route::post('/assign-user-type',[AdminController::class, 'assignUser'])->name('admin_assign_user');
 
 
 });
