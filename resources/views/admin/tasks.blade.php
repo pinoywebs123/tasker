@@ -228,6 +228,10 @@
           <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="editTitle">
         </div> 
         <div class="mb-3">
+          <label>Report Deadline</label>
+          <input type="date" class="form-control" name="deadline" required id="deadline_get">
+        </div>
+        <div class="mb-3">
           <label>Project Description</label>
           <textarea class="form-control" name="description" required id="editDescription"></textarea>
         </div>         
@@ -358,6 +362,7 @@
               console.log(data);
               $("#editTitle").val(data.title);
               $("#editDescription").val(data.description);
+              $("#deadline_get").val(data.deadline);
               
            }
         });
