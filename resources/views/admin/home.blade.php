@@ -105,7 +105,7 @@
                         <span class="badge badge-sm bg-gradient-primary" style="width: 150px">{{$user->position->name}}</span>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-info" style="width: 200px">{{$user->department->name}}</span>
+                        <span class="badge badge-sm bg-gradient-info" style="width: 300px">{{$user->department->name}}</span>
                       </td>
                      
                       <td class="align-middle">
