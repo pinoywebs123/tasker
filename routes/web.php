@@ -59,6 +59,14 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
     Route::get('/delete-position/{id}',[AdminController::class, 'delete_position'])->name('admin_delete_position');
     Route::post('/assign-user-type',[AdminController::class, 'assignUser'])->name('admin_assign_user');
 
+    //file types
+    Route::post('/create-report-type',[AdminController::class, 'createReportType'])->name('admin_create_report_type');
+    Route::get('/delete-report-type/{id}',[AdminController::class, 'deleteReportType'])->name('admin_delete_report_type');
+
+    //upload file type
+    Route::post('/create-file-type',[AdminController::class, 'createFileType'])->name('admin_create_file_type');
+    Route::get('/delete-file-type/{id}',[AdminController::class, 'deleteFileType'])->name('admin_delete_file_type');
+
 
 });
 

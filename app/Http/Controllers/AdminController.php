@@ -11,6 +11,8 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskFile;
 use App\Models\Assign;
+use App\Models\ReportType;
+use App\Models\FileType;
 
 use App\Models\Department;
 use App\Models\ProjectDepartment;
@@ -59,8 +61,10 @@ class AdminController extends Controller
         {
             $projects = Project::where('status_id',1)->orWhere('status_id',2)->get();
         }
+
+        $report_types = ReportType::all();
         
-        return view('admin.projects',compact('projects','departments'));
+        return view('admin.projects',compact('projects','departments','report_types'));
     }
 
     public function archive_projects()
@@ -193,8 +197,9 @@ class AdminController extends Controller
         $tasks = Task::where('project_id', $id)->get();
         $departments = Department::all();
         $find_assign_project = ProjectDepartment::where('project_id',$id)->first();
+        $file_types = FileType::all();
 
-        return view('admin.tasks',compact('find_project','tasks','departments','find_assign_project'));
+        return view('admin.tasks',compact('find_project','tasks','departments','find_assign_project','file_types'));
     }
 
     public function create_task(Request $request)
@@ -327,8 +332,10 @@ class AdminController extends Controller
         $roles = DB::table('roles')->get();
         $departments = Department::all();
         $positions = Position::all();
+        $report_types = ReportType::all();
+        $file_types = FileType::all();
 
-        return view('admin.maintenance',compact('roles','departments','positions'));
+        return view('admin.maintenance',compact('roles','departments','positions','report_types','file_types'));
     }
 
     public function createDepartment(Request $request)
@@ -383,5 +390,30 @@ class AdminController extends Controller
                         ->first();
 
         return response()->json($get_roles);
+    }
+
+    public function createReportType(Request $request)
+    {
+
+        ReportType::create(['name'=> $request->name]);
+        return back()->with('success', 'Report Type Created Successfully');
+    }
+
+    public function deleteReportType($id)
+    {
+        ReportType::where('id', $id)->delete();
+        return back()->with('success', 'Report Type Deleted Successfully');
+    }
+
+    public function createFileType(Request $request)
+    {
+        FileType::create(['name'=> $request->name]);
+        return back()->with('success', 'File Type Created Successfully');
+    }
+
+    public function deleteFileType($id)
+    {
+        FileType::where('id', $id)->delete();
+        return back()->with('success', 'File Type Deleted Successfully');
     }
 }

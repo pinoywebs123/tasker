@@ -236,10 +236,160 @@
 
 
       </div>
+
+       <div class="row">
+            
+       
+
+        <div class="col-4">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              Report Type
+              <br>
+              <button data-bs-toggle="modal" data-bs-target="#reportModal" class="btn btn-primary btn-xs">New</button>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Action</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($report_types as $rept)
+                      <tr>
+                        <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                          <p class="text-xs text-secondary mb-0">{{strtoupper($rept->name)}}</p>
+                        </div>
+                      </td>
+                        
+                      <td>
+                        <a href="{{route('admin_delete_report_type', $rept->id)}}" class="btn btn-danger btn-xs">Delete</a>
+                      </td>
+                      </tr>
+                    @endforeach
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              Task File Type
+              <br>
+              <button data-bs-toggle="modal" data-bs-target="#fileModal" class="btn btn-primary btn-xs">New</button>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($file_types as $file)
+                      <tr>
+                        <td>
+                        <div class="d-flex px-2 py-1">
+                          
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{strtoupper($file->name)}}</h6>
+                            
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="{{route('admin_delete_file_type', $file->id)}}" class="btn btn-danger btn-xs">Delete</a>
+                      </td>
+                      </tr>
+                    @endforeach
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+       
+
+
+      </div>
+
+
       
       
     </div>
   </main>
+
+   <div class="modal" id="fileModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">File Type Information?</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('admin_create_file_type')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="text" name="name" class="form-control" required>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Submit</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="reportModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Report Type Information?</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('admin_create_report_type')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="text" name="name" class="form-control" required>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Submit</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
 
   <div class="modal" id="departmentModal">
     <div class="modal-dialog">

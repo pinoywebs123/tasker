@@ -184,9 +184,10 @@
         <div class="mb-3">
           <label>Report Type</label>
            <select class="form-control" required>
-             <option>Photo</option>
-             <option>Document</option>
-             <option>Physical Task</option>
+            @foreach($file_types as $file)
+              <option>{{$file->name}}</option>
+            @endforeach
+            
            </select>
           </div>
         <div class="mb-3">

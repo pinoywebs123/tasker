@@ -182,9 +182,10 @@
         <div class="mb-3">
           <label>Report Type</label>
            <select class="form-control" required name="project_type">
-             <option value="ISA Report">ISA Report</option>
-             <option value="Accreditation Report">Accreditation Report</option>
-             
+            @foreach($report_types as $rep)
+              <option value="{{$rep->name}}">{{$rep->name}}</option>
+            @endforeach
+            
            </select>
         </div>
 
