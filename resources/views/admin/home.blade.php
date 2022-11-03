@@ -145,10 +145,10 @@
                   @csrf
                   <input type="hidden" name="user_id" id="user_id">
                   <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="First Name" aria-label="Name" name="first_name" required id="firstName">
+                    <input type="text" class="form-control" placeholder="First Name" aria-label="Name" name="first_name" required id="firstName2">
                   </div>
                   <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Last Name" aria-label="Name" name="last_name" required id="lastName">
+                    <input type="text" class="form-control" placeholder="Last Name" aria-label="Name" name="last_name" required id="lastName2">
                   </div>
                   <div class="mb-3">
                     <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required id="email">
@@ -239,10 +239,10 @@
                   @csrf
                   
                   <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="First Name" aria-label="Name" name="first_name" required id="first_name">
+                    <input type="text" class="form-control" placeholder="First Name" aria-label="Name" name="first_name" required id="firstName1">
                   </div>
                   <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Last Name" aria-label="Name" name="last_name" required id="last_name">
+                    <input type="text" class="form-control" placeholder="Last Name" aria-label="Name" name="last_name" required id="lastName1">
                   </div>
                   <div class="mb-3">
                     <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required id="email">
@@ -334,8 +334,8 @@
            data:{_token: token, user_id : user_id},
            success:function(data) {
               console.log(data);
-              $("#firstName").val(data.first_name);
-              $("#lastName").val(data.last_name);
+              $("#firstName2").val(data.first_name);
+              $("#lastName2").val(data.last_name);
               $("#email").val(data.email);
               $("#position").val(data.position_id);
               $("#department").val(data.department_id);
@@ -400,6 +400,19 @@
       });
 
     });
+
+    function testInput(event) {
+       var value = String.fromCharCode(event.which);
+       var pattern = new RegExp(/[a-zåäö ]/i);
+       return pattern.test(value);
+    }
+
+    $('#firstName1').bind('keypress', testInput);
+    $('#lastName1').bind('keypress', testInput);
+
+    $('#firstName2').bind('keypress', testInput);
+    $('#lastName2').bind('keypress', testInput);
+
   </script>
 </body>
 
