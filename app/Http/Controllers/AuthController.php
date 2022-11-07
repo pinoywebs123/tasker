@@ -28,6 +28,10 @@ class AuthController extends Controller
 
         if(Auth::attempt(['username'=> strtolower($validatedData['username']), 'password'=> $validatedData['password']]))
         {
+            if(Auth::user()->status_id != 1)
+            {
+                return back()->with('error','Verify your account.Kindly Check your email or Spam');
+            }
 
             if( Auth::user()->getRoleNames()[0] == 'admin')
             {
