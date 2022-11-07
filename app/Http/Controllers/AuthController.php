@@ -9,12 +9,21 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\NewUser;
 use Mail;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
     
     public function login()
     {
+        $unverified_users =  User::where('status_id',0)->get();
+        foreach($unverified_users as $user)
+        {
+            if(now()->diffInDays($user->created_at) > 3)
+            {
+                $user->delete();
+            }
+        }
         return view('auth.login');
     }
 
