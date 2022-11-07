@@ -26,7 +26,7 @@ class AdminController extends Controller
     {
         $positions = Position::all();
         $departments = Department::all();
-        $users = User::all();
+        $users = User::where('status_id',1)->get();
         return view('admin.home',compact('users','positions','departments'));
     }
 

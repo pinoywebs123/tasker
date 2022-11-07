@@ -7,6 +7,8 @@ use App\Models\Position;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\NewUser;
+use Mail;
 
 class AuthController extends Controller
 {
@@ -81,6 +83,7 @@ class AuthController extends Controller
             $user->username         = strtolower($validatedData['first_name'].'.'.$validatedData['last_name']);
             $user->email            = $validatedData['email'];
             $user->password         = bcrypt($validatedData['password']);
+            $user->status_id        = 0;
             $user->save();
 
             $user->assignRole('manager');
@@ -94,6 +97,7 @@ class AuthController extends Controller
             $user->username         = strtolower($validatedData['first_name'].'.'.$validatedData['last_name']);
             $user->email            = $validatedData['email'];
             $user->password         = bcrypt($validatedData['password']);
+            $user->status_id        = 0;
             $user->save();
 
             $user->assignRole('tasker');
@@ -107,6 +111,7 @@ class AuthController extends Controller
             $user->username         = strtolower($validatedData['first_name'].'.'.$validatedData['last_name']);
             $user->email            = $validatedData['email'];
             $user->password         = bcrypt($validatedData['password']);
+            $user->status_id        = 0;
             $user->save();
 
             $user->assignRole('manager_limited');
@@ -120,6 +125,7 @@ class AuthController extends Controller
             $user->username         = strtolower($validatedData['first_name'].'.'.$validatedData['last_name']);
             $user->email            = $validatedData['email'];
             $user->password         = bcrypt($validatedData['password']);
+            $user->status_id        = 0;
             $user->save();
 
             $user->assignRole('admin');
@@ -128,8 +134,19 @@ class AuthController extends Controller
             return 'Invalid User Type';
         }
 
+        Mail::to($validatedData['email'])->send(new NewUser($validatedData, $user->id));
+
         return back()->with('success','Successfully Registered');
 
         
+    }
+
+    public function verifyAccount($email)
+    {
+         $check_user = User::where('email',$email)->update(['status_id' => 1]);
+        if($check_user)
+        {
+            return redirect('/login')->with('success','Account Verified Successfully');
+        }
     }
 }

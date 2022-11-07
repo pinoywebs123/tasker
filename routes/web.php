@@ -14,6 +14,7 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginCheck'])->name('login_check');
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'registerCheck'])->name('register');
+Route::get('/verify-account/{email}', [AuthController::class, 'verifyAccount'])->name('verify');
 
 Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
 
