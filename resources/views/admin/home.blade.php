@@ -151,7 +151,7 @@
                     <input type="text" class="form-control" placeholder="Last Name" aria-label="Name" name="last_name" required id="lastName2">
                   </div>
                   <div class="mb-3">
-                    <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required id="email">
+                    <input type="email" class="form-control email_create" placeholder="Email" aria-label="Email" name="email" required id="email">
                   </div>
 
 
@@ -245,7 +245,7 @@
                     <input type="text" class="form-control" placeholder="Last Name" aria-label="Name" name="last_name" required id="lastName1">
                   </div>
                   <div class="mb-3">
-                    <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required id="email">
+                    <input type="email" class="form-control email_create" placeholder="Email" aria-label="Email" name="email" required id="email">
                   </div>
 
                   
@@ -287,7 +287,7 @@
                   </div>
                   
                   <div class="text-center">
-                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Submit</button>
+                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2 submit_user">Submit</button>
                   </div>
                   
                 
@@ -397,6 +397,20 @@
         });
 
          
+      });
+
+      $(".email_create").focusout(function(){
+
+        var myemail = $(this).val();
+        
+
+        if (!/@su.edu.ph\s*$/.test(myemail)) {
+           console.log("Email need an offcial @su.edu.ph");
+           $(".submit_user").attr("disabled", "disabled")
+
+        }else {
+          $(".submit_user").removeAttr("disabled");
+        }
       });
 
     });
