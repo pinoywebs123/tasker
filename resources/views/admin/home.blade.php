@@ -245,6 +245,7 @@
                     <input type="text" class="form-control" placeholder="Last Name" aria-label="Name" name="last_name" required id="lastName1">
                   </div>
                   <div class="mb-3">
+                    <label>Email must be valid (@su.edu.ph) format</label>
                     <input type="email" class="form-control email_create" placeholder="Email" aria-label="Email" name="email" required id="email">
                   </div>
 
