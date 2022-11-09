@@ -278,12 +278,12 @@
                   
 
                   <div class="mb-3">
-                    <label>Password</label>
+                    <label>Enter Password</label>
                     <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password">
                   </div>
 
                   <div class="mb-3">
-                    <label>Repeat Password</label>
+                    <label>Re-Enter Password</label>
                     <input type="password" class="form-control" placeholder="Repeat Password" aria-label="Password" name="repeat_password" required>
                   </div>
                   
