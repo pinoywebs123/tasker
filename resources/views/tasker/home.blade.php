@@ -64,7 +64,7 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Project Lists</h6>
+              <h6>Lists of Reports</h6>
               <h5>{{$department_name->name}}</h5>
               @include('shared.notification')
             </div>

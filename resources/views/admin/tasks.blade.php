@@ -170,7 +170,7 @@
         @csrf
         <input type="hidden" name="project_id" value="{{Request::segment(2)}}">
         <div class="mb-3">
-          <label>Report Name</label>
+          <label>Task Name</label>
           <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="name">
         </div> 
         <div class="mb-3">
@@ -214,7 +214,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Project Informations</h4>
+          <h4 class="modal-title">Task Informations</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -225,7 +225,7 @@
         @csrf
         <input type="hidden" name="task_id" id="updateProjectId">
         <div class="mb-3">
-          <label>Project Name</label>
+          <label>Task Name</label>
           <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="editTitle">
         </div> 
         <div class="mb-3">
@@ -233,7 +233,7 @@
           <input type="date" class="form-control" name="deadline" required id="deadline_get">
         </div>
         <div class="mb-3">
-          <label>Project Description</label>
+          <label>Task Description</label>
           <textarea class="form-control" name="description" required id="editDescription"></textarea>
         </div>         
        

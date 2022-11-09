@@ -90,7 +90,7 @@
                           ?>
                          
                         </p>
-                        <button type="submit" class="btn btn-danger btn-xs">DOWNLOAD NOW</button>
+                        <button type="submit" class="btn btn-danger btn-xs">DOWNLOAD</button>
                       </form>
 
                     @endforeach
