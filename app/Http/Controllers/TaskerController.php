@@ -11,6 +11,7 @@ use App\Models\Department;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Storage;
 use App\Models\TaskFile;
+use App\Models\FileType;
 
 class TaskerController extends Controller
 {
@@ -61,10 +62,11 @@ class TaskerController extends Controller
         $find_project = Project::find($project_id);
         $find_task = Task::find($task_id);
         $comments = Comment::where('task_id', $task_id)->orderBy('id','desc')->get();
+        $file_types = FileType::all();
 
         $task_files = TaskFile::where('task_id', $task_id)->where('file_name','!=','null')->get();
 
-        return view('tasker.view_task',compact('find_project','find_task','comments','task_files'));
+        return view('tasker.view_task',compact('find_project','find_task','comments','task_files','file_types'));
     }
 
     public function task_comment(Request $request)
@@ -73,6 +75,7 @@ class TaskerController extends Controller
         $comment = htmlentities($comment);
 
         Comment::create(['task_id'=> $request->task_id, 'comment'=> $comment, 'user_id' => Auth::id()]);
+        Task::where('id', $request->task_id)->update(['updated_by'=> Auth::id()]);
         return back()->with('success','Comment Successfully.');
     }
 
@@ -94,7 +97,32 @@ class TaskerController extends Controller
         $task_file->file_name   = $url;
         $task_file->save();
 
+        Task::where('id', $request->task_id)->update(['updated_by'=> Auth::id()]);
+
+
         
         return back()->with('success','Task Files Uploaded Successfully');
+    }
+
+    public function update_upload_task(Request $request)
+    {
+
+        $check_task = TaskFile::where('task_id', $request->task_id)->where('id',$request->file_id)->first();
+        if($check_task)
+        {
+            $cover = $request->file('task_file')->getClientOriginalName();;
+       
+            $url = Storage::putFileAs('public', $request->file('task_file'),$cover);
+
+            Task::where('id', $request->task_id)->update(['updated_by'=> Auth::id()]);
+
+            $check_task->update(['user_id'=> Auth::id(),'file_name' => $url]);
+            return back()->with('success','Task Files Uploaded Successfully');
+
+        }
+        
+
+        
+        
     }
 }    

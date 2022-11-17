@@ -91,6 +91,7 @@
                          
                         </p>
                         <button type="submit" class="btn btn-danger btn-xs">DOWNLOAD</button>
+                        <button type="button" class="btn btn-info btn-xs update_file" value="{{$file->id}}" data-bs-toggle="modal" data-bs-target="#updateFileModal">Update File</button>
                       </form>
 
                     @endforeach
@@ -100,6 +101,7 @@
                   </p>
                   <br>
                   <br>
+                  <button class="btn bg-gradient-dark btn-xs" value="{{Request::segment(3)}}" data-bs-toggle="modal" data-bs-target="#createSubModal">Add Subtask</button>
                   <br>
                   <br>
                   <ul class="list-group">
@@ -172,7 +174,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Change Status?</h4>
+          <h4 class="modal-title">Upload File?</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -182,6 +184,7 @@
            
         @csrf
         <input type="hidden" name="project_id" value="{{Request::segment(4)}}">
+        
         <input type="hidden" name="task_id" value="{{Request::segment(3)}}">
          <div class="mb-3">
           <label>Task Type</label>
@@ -197,6 +200,105 @@
           <input type="file" name="task_file" class="form-control" required>
         </div> 
 
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Submit</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="updateFileModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Upload File?</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('update_upload_task')}}" method="POST" enctype="multipart/form-data">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="hidden" name="file_id" id="file_id">
+        <input type="hidden" name="task_id" value="{{Request::segment(3)}}">
+         <div class="mb-3">
+          <label>Task Type</label>
+           <select class="form-control" required>
+             <option>Photo</option>
+             <option>Document</option>
+             <option>Physical Task</option>
+           </select>
+        </div>
+
+        <div class="mb-3">
+          <label>Task File</label>
+          <input type="file" name="task_file" class="form-control" required>
+        </div> 
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Submit</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="createSubModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Sub Task Informations</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('admin_create_sub_task')}}" method="POST" enctype="multipart/form-data">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="hidden" name="task_id" value="{{Request::segment(3)}}">
+        <div class="mb-3">
+          <label>Report Name</label>
+          <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="name">
+        </div> 
+        <div class="mb-3">
+          <label>Report Description</label>
+          <textarea class="form-control" name="description" required></textarea>
+        </div> 
+        <div class="mb-3">
+          <label>Report Deadline</label>
+          <input type="date" class="form-control" name="deadline" required >
+        </div>
+        <div class="mb-3">
+          <label>Report Type</label>
+           <select class="form-control" required>
+            @foreach($file_types as $file)
+              <option>{{$file->name}}</option>
+            @endforeach
+            
+           </select>
+          </div>
+        <div class="mb-3">
+          <label>Report File</label>
+          <input type="file" name="task_file" class="form-control">
+        </div>         
+       
         </div>
 
         <!-- Modal footer -->
@@ -232,6 +334,10 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="text/javascript">
     $(document).ready(function(){
+      $(".update_file").click(function(){
+          var file_id = $(this).val();
+          $("#file_id").val(file_id);
+      });
       
     });
   </script>

@@ -39,6 +39,7 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
     //task
     Route::get('/{id}/task-list',[AdminController::class, 'task_list'])->name('admin_task_list');
     Route::post('create-task',[AdminController::class, 'create_task'])->name('admin_create_task');
+    Route::post('create-sub-task',[AdminController::class, 'create_sub_task'])->name('admin_create_sub_task');
 
     //Ajax
     Route::post('department-create',[AdminController::class, 'department_create'])->name('admin_department_create');
@@ -88,6 +89,7 @@ Route::group(['prefix'=> 'tasker','middleware'=> 'auth'], function(){
     Route::post('task-comment', [TaskerController::class, 'task_comment'])->name('share_task_comment');
     Route::post('download-task',[TaskerController::class, 'download_task'])->name('download_task');
     Route::post('upload-task',[TaskerController::class, 'upload_task'])->name('upload_task');
+    Route::post('update-upload-task',[TaskerController::class, 'update_upload_task'])->name('update_upload_task');
 
 });
 

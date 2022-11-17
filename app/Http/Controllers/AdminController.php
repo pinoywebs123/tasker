@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Position;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\SubTask;
 use App\Models\TaskFile;
 use App\Models\Assign;
 use App\Models\ReportType;
@@ -199,7 +200,19 @@ class AdminController extends Controller
         $find_assign_project = ProjectDepartment::where('project_id',$id)->first();
         $file_types = FileType::all();
 
+        if(@$_GET['arrange_by'] == 'Normal')
+        {
+            return view('admin.tasks',compact('find_project','tasks','departments','find_assign_project','file_types'));
+
+        }else if(@$_GET['arrange_by'] == 'Sub-Task')
+        {
+            return view('admin.tasks_sub',compact('find_project','tasks','departments','find_assign_project','file_types'));
+
+        }
+
         return view('admin.tasks',compact('find_project','tasks','departments','find_assign_project','file_types'));
+
+        
     }
 
     public function create_task(Request $request)
@@ -221,6 +234,7 @@ class AdminController extends Controller
         $task->title        = $request->title;
         $task->description  = $request->description;
         $task->deadline     = $request->deadline;
+        $task->updated_by   = Auth::id();
         $task->save();
 
         $task_file = new TaskFile;
@@ -231,6 +245,27 @@ class AdminController extends Controller
 
         
         return back()->with('success','Task Created Successfully');
+    }
+
+    public function create_sub_task(Request $request)
+    {
+        if(isset($request->task_file))
+       {
+            $cover = $request->file('task_file')->getClientOriginalName();;
+       
+            $url = Storage::putFileAs('public', $request->file('task_file'),$cover);
+       }else {
+        $url = 'null';
+       }
+
+        $task = new SubTask;
+        $task->task_id   = $request->task_id;
+        $task->status_id    = 1;
+        $task->title        = $request->title;
+        $task->description  = $request->description;
+        $task->deadline     = $request->deadline;
+        $task->updated_by   = Auth::id();
+        $task->save();
     }
 
     public function findTask(Request $request)
@@ -252,7 +287,8 @@ class AdminController extends Controller
         $find_task->update([
             'title'         => $request->title, 
             'description'   => $request->description,
-            'deadline'      => $request->deadline
+            'deadline'      => $request->deadline,
+            'updated_by'    => Auth::id()
         ]);
 
         return back()->with('success','Task Updated Successfully');

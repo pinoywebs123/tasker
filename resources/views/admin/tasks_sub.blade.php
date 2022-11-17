@@ -126,7 +126,7 @@
                        <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{$task->deadline}}</span>
                       </td>
-                        <td class="align-middle text-center">
+                      <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{$task->user->username}}</span>
                       </td>
                       </td>
@@ -155,12 +155,42 @@
                        
 
                       </td>
-                      </td>
-                     
 
                     </tr>
                    
-                     
+                      @foreach($task->sub as $sub)
+                      <tr>
+                          <td>
+                          <div class="d-flex justify-content-end">
+                            
+                            <div class="d-flex flex-column">
+                              <h6 class="mb-0 text-sm">{{$sub->title}}</h6>
+                              
+                            </div>
+                          </div>
+                        </td>
+
+                        <td class="align-middle text-center text-sm">
+                         @if($task->status_id == 1)
+                            <span class="badge badge-sm bg-gradient-info">Active</span>
+                          @elseif($task->status_id == 0)
+                            <span class="badge badge-sm bg-gradient-danger">Inactive</span>
+                          @elseif($task->status_id == 3)
+                            <span class="badge badge-sm bg-gradient-success">Completed</span>
+                          @endif
+                          
+                        </td>
+                        <td class="align-middle text-center">
+                          <span class="text-secondary text-xs font-weight-bold">{{$task->created_at}}</span>
+                        </td>
+                         <td class="align-middle text-center">
+                          <span class="text-secondary text-xs font-weight-bold">{{$task->deadline}}</span>
+                        </td>
+
+                      </tr>
+                      
+                      
+                      @endforeach
                    
 
                     @endforeach
