@@ -266,6 +266,8 @@ class AdminController extends Controller
         $task->deadline     = $request->deadline;
         $task->updated_by   = Auth::id();
         $task->save();
+
+        return back()->with('success','Sub Task Created Successfully');
     }
 
     public function findTask(Request $request)
