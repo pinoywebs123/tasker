@@ -454,4 +454,42 @@ class AdminController extends Controller
         FileType::where('id', $id)->delete();
         return back()->with('success', 'File Type Deleted Successfully');
     }
+
+    public function task_file_list($id)
+    {
+       $find_project = Project::find($id);
+
+        if(!$find_project)
+        {
+            return abort(404);
+        }
+
+       $find_assign_project = ProjectDepartment::where('project_id',$id)->first();
+       $tasks = Task::where('project_id', $id)->get();
+
+        return view('admin.tasks_files',compact('find_project','find_assign_project','tasks'));
+    }
+
+    public function task_schedule_list($id)
+    {
+        $find_project = Project::find($id);
+
+        if(!$find_project)
+        {
+            return abort(404);
+        }
+
+        $tasks = Task::where('project_id', $id)->get();
+
+
+
+       $find_assign_project = ProjectDepartment::where('project_id',$id)->first();
+
+        return view('admin.tasks_schedules',compact('find_project','find_assign_project','tasks'));
+    }
+
+    public function task_timeline_list($id)
+    {
+        return $id;
+    }
 }

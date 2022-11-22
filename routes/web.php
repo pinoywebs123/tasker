@@ -38,6 +38,9 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
 
     //task
     Route::get('/{id}/task-list',[AdminController::class, 'task_list'])->name('admin_task_list');
+    Route::get('/{id}/task-files',[AdminController::class, 'task_file_list'])->name('admin_task_file_list');
+    Route::get('/{id}/task-schedule',[AdminController::class, 'task_schedule_list'])->name('admin_task_schedule_list');
+    Route::get('/{id}/task-timeline',[AdminController::class, 'task_timeline_list'])->name('admin_task_timeline_list');
     Route::post('create-task',[AdminController::class, 'create_task'])->name('admin_create_task');
     Route::post('create-sub-task',[AdminController::class, 'create_sub_task'])->name('admin_create_sub_task');
 

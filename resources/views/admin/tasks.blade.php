@@ -64,7 +64,26 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Tasks Lists</h6>
+               <ul class="nav nav-tabs nav-justified">
+                <li class="nav-item">
+                  <a class="nav-link active" href="{{route('admin_task_list',Request::segment(2))}}">Task List</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('admin_task_file_list',Request::segment(2))}}">Report Files</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('admin_task_schedule_list',Request::segment(2))}}">Report Schedule</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('admin_task_timeline_list',Request::segment(2))}}">Report Timeline</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Report Calendar</a>
+                </li>
+                
+              </ul>
+              <br>
+              
               @if($find_project->status_id == 1)
                 <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
               @endif
