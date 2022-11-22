@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="utf-8" />
+ <script src="{{URL::to('gant/frappe-gantt.min.js')}}"></script>
+  <link rel="stylesheet" href="{{URL::to('gant/frappe-gantt.css')}}">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
@@ -19,6 +21,10 @@
   <link href="{{URL::to('/assets/css/nucleo-svg.css')}}" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="{{URL::to('/assets/css/argon-dashboard.css?v=2.0.4')}}" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -69,13 +75,13 @@
                   <a class="nav-link " href="{{route('admin_task_list',Request::segment(2))}}">Task List</a>
                 </li>
                 <li class="nav-item ">
-                  <a class="nav-link active" href="{{route('admin_task_file_list',Request::segment(2))}}">Report Files</a>
+                  <a class="nav-link " href="{{route('admin_task_file_list',Request::segment(2))}}">Report Files</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{route('admin_task_schedule_list',Request::segment(2))}}">Report Schedule</a>
+                  <a class="nav-link " href="{{route('admin_task_schedule_list',Request::segment(2))}}">Report Schedule</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{route('admin_task_timeline_list',Request::segment(2))}}">Report Timeline</a>
+                  <a class="nav-link active" href="{{route('admin_task_timeline_list',Request::segment(2))}}">Report Timeline</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Report Calendar</a>
@@ -92,85 +98,8 @@
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                     
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date Modified</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Size</th>
-                     
-                      <th class="text-secondary opacity-7"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($tasks as $task)
-                    <tr>
-                      
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$task->title}}</h6>
-                            
-                          </div>
-                        </div>
-                      </td>
-                     
-                   
-                     
-                    
-                     
-                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{$task->updated_at}}</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">type</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">file size</span>
-                      </td>
-                     
-
-                    </tr>
-                   
-                      @foreach($task->sub as $sub)
-                      <tr>
-                          <td>
-                          <div class="d-flex justify-content-end">
-                            
-                            <div class="d-flex flex-column">
-                              <h6 class="mb-0 text-sm">{{$sub->title}}</h6>
-                              
-                            </div>
-                          </div>
-                        </td>
-
-                      
-                        <td class="align-middle text-center">
-                          <span class="text-secondary text-xs font-weight-bold">{{$task->created_at}}</span>
-                        </td>
-
-                        <td class="align-middle text-center">
-                          <span class="text-secondary text-xs font-weight-bold">type</span>
-                        </td>
-
-                        <td class="align-middle text-center">
-                          <span class="text-secondary text-xs font-weight-bold">file size</span>
-                        </td>
-                         
-
-                      </tr>
-                      
-                      
-                      @endforeach
-                   
-
-                    @endforeach
-                    
-                  </tbody>
-                </table>
+                
+                <div id='calendar'></div>
               </div>
             </div>
           </div>
@@ -204,55 +133,9 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{URL::to('/assets/js/argon-dashboard.min.js?v=2.0.4')}}"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      var find_project_url = "{{route('admin_find_task')}}";
-      var token = "{{Session::token()}}";
-
-      $(".archive").click(function(){
-        var task_id = $(this).val();
-        $("#statusProjectId").val(task_id);
-
-      });
-
-       $(".delete").click(function(){
-        var task_id = $(this).val();
-        $("#deleteProjectId").val(task_id);
-
-      });
-
-      $(".assign").click(function(){
-        var task_id = $(this).val();
-        $("#assignTask").val(task_id);
-
-      });
-
-      $(".updateProject").click(function(){
-          var task_id = $(this).val();
-          $("#updateProjectId").val(task_id);
-          $.ajax({
-           type:'POST',
-           url:find_project_url,
-           data:{_token: token, task_id : task_id},
-           success:function(data) {
-              console.log(data);
-              $("#editTitle").val(data.title);
-              $("#editDescription").val(data.description);
-              $("#deadline_get").val(data.deadline);
-              
-           }
-        });
-
-
-      });
-
-      $("#arrangeSelect").change(function(){
-        var arrange = $(this).val();
-        $("#arrangeForm").submit();
-      });
-
-    });
+ 
+  <script>
+    var calendar = $('#calendar').fullCalendar({});
   </script>
 </body>
 

@@ -490,6 +490,19 @@ class AdminController extends Controller
 
     public function task_timeline_list($id)
     {
-        return $id;
+        $find_project = Project::find($id);
+
+        if(!$find_project)
+        {
+            return abort(404);
+        }
+
+        $tasks = Task::where('project_id', $id)->get();
+
+
+
+       $find_assign_project = ProjectDepartment::where('project_id',$id)->first();
+
+        return view('admin.tasks_timeline',compact('find_project','find_assign_project','tasks'));
     }
 }
