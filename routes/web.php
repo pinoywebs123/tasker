@@ -50,11 +50,15 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
 
 
     Route::post('/find-task',[AdminController::class, 'findTask'])->name('admin_find_task');
+    Route::post('/find-sub-task',[AdminController::class, 'findSubTask'])->name('admin_find_sub_task');
     Route::post('/update-task',[AdminController::class, 'updateTask'])->name('admin_update_task');
+    Route::post('/update-sub-task',[AdminController::class, 'updateSubTask'])->name('admin_update_sub_task');
     Route::post('/change-task',[AdminController::class, 'changeTasktStatus'])->name('admin_change_task_status');
+    Route::post('/change-sub-task',[AdminController::class, 'changeSubTasktStatus'])->name('admin_change_sub_task_status');
     Route::post('/assign-project',[AdminController::class, 'assignProject'])->name('admin_assign_project');
     Route::post('/assign-task',[AdminController::class, 'assignTask'])->name('admin_assign_task');
     Route::post('/delete-task',[AdminController::class, 'deleteTask'])->name('admin_delete_task');
+    Route::post('/delete-sub-task',[AdminController::class, 'deleteSubTask'])->name('admin_delete_sub_task');
 
     //system maintenance
     Route::get('/system-maintenance',[AdminController::class, 'system_maintenance'])->name('admin_system_maintenance');
@@ -89,6 +93,7 @@ Route::group(['prefix'=> 'tasker','middleware'=> 'auth'], function(){
 
     //tasker
     Route::get('/view-task/{task_id}/{project_id}',[TaskerController::class, 'view_task'])->name('share_view_task');
+    Route::get('/view-sub-task/{task_id}/{project_id}',[TaskerController::class, 'view_task'])->name('share_view_task');
     Route::post('task-comment', [TaskerController::class, 'task_comment'])->name('share_task_comment');
     Route::post('download-task',[TaskerController::class, 'download_task'])->name('download_task');
     Route::post('upload-task',[TaskerController::class, 'upload_task'])->name('upload_task');

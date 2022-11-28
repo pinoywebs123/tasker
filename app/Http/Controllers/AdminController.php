@@ -276,6 +276,14 @@ class AdminController extends Controller
         return response()->json( $find_task );
     }
 
+    public function findSubTask(Request $request)
+    {
+        $find_sub = SubTask::find($request->sub_id);
+        return response()->json( $find_sub );
+    }
+
+    
+
     public function updateTask(Request $request)
     {
 
@@ -296,6 +304,26 @@ class AdminController extends Controller
         return back()->with('success','Task Updated Successfully');
     }
 
+    public function updateSubTask(Request $request)
+    {
+
+        $find_task = SubTask::find($request->sub_id);
+
+        if(!$find_task)
+        {
+            return back()->with('error','SubTask Not Found');
+        }
+
+        $find_task->update([
+            'title'         => $request->title, 
+            'description'   => $request->description,
+            'deadline'      => $request->deadline,
+            'updated_by'    => Auth::id()
+        ]);
+
+        return back()->with('success','SubTask Updated Successfully');
+    }
+
     public function changeTasktStatus(Request $request)
     {
         $find_task = Task::find($request->task_id);
@@ -303,6 +331,28 @@ class AdminController extends Controller
         if(!$find_task)
         {
             return back()->with('error','Task Not Found');
+        }
+
+        if($find_task->status_id == 1)
+        {
+            $status_id = 0;
+        }else if($find_task->status_id == 0)
+        {
+            $status_id = 1;
+        }
+
+        $find_task->update(['status_id'=> $status_id]);
+
+        return back()->with('success','Status Updated Successfully');
+    }
+
+    public function changeSubTasktStatus(Request $request)
+    {
+        $find_task = SubTask::find($request->sub_id);
+
+        if(!$find_task)
+        {
+            return back()->with('error','SubTask Not Found');
         }
 
         if($find_task->status_id == 1)
@@ -329,6 +379,20 @@ class AdminController extends Controller
 
         $find_task->delete();
         return back()->with('success','Task deleted Successfully');
+
+    }
+
+    public function deleteSubTask(Request $request)
+    {
+        $find_task = SubTask::find($request->sub_id);
+
+        if(!$find_task)
+        {
+            return back()->with('error','SubTask Not Found');
+        }
+
+        $find_task->delete();
+        return back()->with('success','SubTask deleted Successfully');
 
     }
 

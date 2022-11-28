@@ -203,6 +203,35 @@
                          <td class="align-middle text-center">
                           <span class="text-secondary text-xs font-weight-bold">{{$task->deadline}}</span>
                         </td>
+                        <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{$task->user->username}}</span>
+                      </td>
+                      </td>
+                       <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{$task->updated_at}}</span>
+                      </td>
+                      <td class="align-middle">
+
+                        @if($find_assign_project->project->status_id == 1)
+                           <button class="btn btn-info btn-xs updateSub" data-bs-toggle="modal" data-bs-target="#subModal" value="{{$sub->id}}">Edit</button>
+
+                          @if($sub->status_id == 1)
+                            <button class="btn btn-primary btn-xs archiveSub" data-bs-toggle="modal" data-bs-target="#statusSubModal" value="{{$sub->id}}">Archive</button>
+                          
+                             <!-- <a href="{{route('share_view_task',['task_id' => $sub->id, 'project_id'=> Request::Segment(2)])}}" class="btn btn-info btn-xs">View Task</a> -->
+
+                            <button class="btn btn-danger btn-xs deleteSub"  data-bs-toggle="modal" data-bs-target="#deleteSubModal" value="{{$sub->id}}">Delete</button>
+
+                          @elseif($sub->status_id == 0)
+                            <button class="btn btn-success btn-xs archiveSub" data-bs-toggle="modal" data-bs-target="#statusSubModal" value="{{$sub->id}}">Activate</button>
+                            
+                          @endif
+                        
+                        @endif
+
+                       
+
+                      </td>
 
                       </tr>
                       
@@ -320,6 +349,48 @@
     </div>
   </div>
 
+  <div class="modal" id="subModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Sub-Task Informations</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('admin_update_sub_task')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="hidden" name="sub_id" id="updateSubId">
+        <div class="mb-3">
+          <label>Task Name</label>
+          <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="subTitle">
+        </div> 
+        <div class="mb-3">
+          <label>Report Deadline</label>
+          <input type="date" class="form-control" name="deadline" required id="subDeadline">
+        </div>
+        <div class="mb-3">
+          <label>Task Description</label>
+          <textarea class="form-control" name="description" required id="subDescription"></textarea>
+        </div>         
+       
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Submit</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
   <div class="modal" id="statusModal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -336,6 +407,35 @@
            
         @csrf
         <input type="hidden" name="task_id" id="statusProjectId">
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Yes</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="statusSubModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Change Status?</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('admin_change_sub_task_status')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="hidden" name="sub_id" id="statusSubId">
         </div>
 
         <!-- Modal footer -->
@@ -378,6 +478,35 @@
     </div>
   </div>
 
+  <div class="modal" id="deleteSubModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Are you sure to delete SubTask?</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('admin_delete_sub_task')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="hidden" name="sub_id" id="deleteSubId">
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Yes</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
 
   
   <!--   Core JS Files   -->
@@ -401,7 +530,8 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="text/javascript">
     $(document).ready(function(){
-      var find_project_url = "{{route('admin_find_task')}}";
+      var find_project_url = "{{route('admin_find_task')}}"; admin_find_sub_task
+       var admin_find_sub_task = "{{route('admin_find_sub_task')}}"; 
       var token = "{{Session::token()}}";
 
       $(".archive").click(function(){
@@ -410,9 +540,21 @@
 
       });
 
+      $(".archiveSub").click(function(){
+        var sub_id = $(this).val();
+        $("#statusSubId").val(sub_id);
+
+      });
+
        $(".delete").click(function(){
         var task_id = $(this).val();
         $("#deleteProjectId").val(task_id);
+
+      });
+
+       $(".deleteSub").click(function(){
+        var sub_id = $(this).val();
+        $("#deleteSubId").val(sub_id);
 
       });
 
@@ -434,6 +576,26 @@
               $("#editTitle").val(data.title);
               $("#editDescription").val(data.description);
               $("#deadline_get").val(data.deadline);
+              
+           }
+        });
+
+
+      });
+
+      $(".updateSub").click(function(){
+          var sub_id = $(this).val();
+          console.log(sub_id);
+          $("#updateSubId").val(sub_id);
+          $.ajax({
+           type:'POST',
+           url:admin_find_sub_task,
+           data:{_token: token, sub_id : sub_id},
+           success:function(data) {
+              console.log(data);
+              $("#subTitle").val(data.title);
+              $("#subDeadline").val(data.deadline);
+              $("#subDescription").val(data.description);
               
            }
         });
