@@ -221,11 +221,13 @@ class AdminController extends Controller
 
        if(isset($request->task_file))
        {
-            $cover = $request->file('task_file')->getClientOriginalName();;
+            $cover = $request->file('task_file')->getClientOriginalName();
+            $file_size = $request->file('task_file')->getSize();
        
             $url = Storage::putFileAs('public', $request->file('task_file'),$cover);
        }else {
         $url = 'null';
+        $file_size = 'null';
        }
 
         $task = new Task;
@@ -241,6 +243,8 @@ class AdminController extends Controller
         $task_file->task_id     = $task->id;
         $task_file->user_id     = Auth::id();
         $task_file->file_name   = $url;
+        $task_file->type     = $request->file_type;
+        $task_file->size     =$file_size;
         $task_file->save();
 
         
@@ -522,6 +526,7 @@ class AdminController extends Controller
     public function task_file_list($id)
     {
        $find_project = Project::find($id);
+       
 
         if(!$find_project)
         {
@@ -529,7 +534,7 @@ class AdminController extends Controller
         }
 
        $find_assign_project = ProjectDepartment::where('project_id',$id)->first();
-       $tasks = Task::where('project_id', $id)->get();
+        $tasks = Task::where('project_id', $id)->with('task_files')->get();
 
         return view('admin.tasks_files',compact('find_project','find_assign_project','tasks'));
     }

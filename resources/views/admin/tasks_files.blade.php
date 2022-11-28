@@ -125,23 +125,23 @@
                        <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{$task->updated_at}}</span>
                       </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">type</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">file size</span>
-                      </td>
+                      
                      
 
                     </tr>
                    
-                      @foreach($task->sub as $sub)
+                      @foreach($task->task_files as $file)
                       <tr>
                           <td>
                           <div class="d-flex justify-content-end">
                             
                             <div class="d-flex flex-column">
-                              <h6 class="mb-0 text-sm">{{$sub->title}}</h6>
+                              <h6 class="mb-0 text-sm">
+                                 <?php 
+                                $file_name = explode("/",$file->file_name);
+                                echo $file_name[1];
+                              ?>
+                              </h6>
                               
                             </div>
                           </div>
@@ -149,15 +149,15 @@
 
                       
                         <td class="align-middle text-center">
-                          <span class="text-secondary text-xs font-weight-bold">{{$task->created_at}}</span>
+                          <span class="text-secondary text-xs font-weight-bold">{{$file->created_at}}</span>
                         </td>
 
                         <td class="align-middle text-center">
-                          <span class="text-secondary text-xs font-weight-bold">type</span>
+                          <span class="text-secondary text-xs font-weight-bold">{{$file->type}}</span>
                         </td>
 
                         <td class="align-middle text-center">
-                          <span class="text-secondary text-xs font-weight-bold">file size</span>
+                          <span class="text-secondary text-xs font-weight-bold">{{$file->size}} bytes</span>
                         </td>
                          
 

@@ -24,4 +24,9 @@ class Task extends Model
     {
         return $this->belongsTo(User::class,'updated_by','id');
     }
+
+    public function task_files()
+    {
+        return $this->hasMany(TaskFile::class);
+    }
 }

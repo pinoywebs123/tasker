@@ -225,9 +225,9 @@
         </div>
         <div class="mb-3">
           <label>Report Type</label>
-           <select class="form-control" required>
+           <select class="form-control" required name="file_type">
             @foreach($file_types as $file)
-              <option>{{$file->name}}</option>
+              <option value="{{$file->name}}">{{$file->name}}</option>
             @endforeach
             
            </select>
