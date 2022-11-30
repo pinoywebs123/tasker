@@ -133,7 +133,7 @@
                       @foreach($task->task_files as $file)
                       <tr>
                           <td>
-                          <div class="d-flex justify-content-end">
+                          <div class="d-flex justify-content-start">
                             
                             <div class="d-flex flex-column">
                               <h6 class="mb-0 text-sm">

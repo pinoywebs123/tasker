@@ -65,8 +65,8 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               
-              <h3>Project Title: {{$find_project->title}}</h3>
-              <h6>Task Information</h6>
+              <h3>Report Title: {{$find_project->title}}</h3>
+              <h6>Report description</h6>
               @include('shared.notification')
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -188,10 +188,10 @@
         <input type="hidden" name="task_id" value="{{Request::segment(3)}}">
          <div class="mb-3">
           <label>Task Type</label>
-           <select class="form-control" required>
-             <option>Photo</option>
-             <option>Document</option>
-             <option>Physical Task</option>
+           <select class="form-control" required name="file_type">
+             <option value="Image">Photo</option>
+             <option value="Document">Document</option>
+             <option value="Physical Task">Physical Task</option>
            </select>
         </div>
 
@@ -263,7 +263,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Sub Task Informations</h4>
+          <h4 class="modal-title">Sub Report description</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 

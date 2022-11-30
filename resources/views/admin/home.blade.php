@@ -65,8 +65,8 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Users Table</h6>
-              <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
+              <h6>Users Profile Table</h6>
+              <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">New user Profile</button>
               @include('shared.notification')
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -75,7 +75,7 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Staff Name</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Role</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Username</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Position</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
@@ -109,8 +109,8 @@
                       </td>
                      
                       <td class="align-middle">
-                        <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$user->id}}">Edit</button>
-                        <button class="btn btn-danger btn-xs archive" value="{{$user->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal" value="{{$user->id}}">Delete</button>
+                        <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$user->id}}" style="width: 80px">Edit</button>
+                        <button class="btn btn-danger btn-xs archive" value="{{$user->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal" value="{{$user->id}}" style="width: 80px">Delete</button>
                       </td>
                     </tr>
 
@@ -134,7 +134,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">User Informations</h4>
+          <h4 class="modal-title">Update User Profile Informations</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -156,7 +156,7 @@
 
 
                   <div class="mb-3">
-                    <label>Select Position</label>
+                    <label>Select User Role</label>
                     <select class="form-control" name="position" required id="position">
                       @foreach($positions as $post)
                         <option value="{{$post->id}}">{{$post->name}}</option>
@@ -228,7 +228,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">User Informations</h4>
+          <h4 class="modal-title">New User Profile Informations</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -263,7 +263,7 @@
                   </div>
 
                   <div class="mb-3">
-                    <label>Select Position</label>
+                    <label>Select User Role</label>
                     <select class="form-control" name="position" required id="position_create">
                       
                     </select>

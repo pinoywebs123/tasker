@@ -86,7 +86,8 @@ class TaskerController extends Controller
 
     public function upload_task(Request $request)
     {
-        $cover = $request->file('task_file')->getClientOriginalName();;
+        $cover = $request->file('task_file')->getClientOriginalName();
+        $file_size = $request->file('task_file')->getSize();
        
         $url = Storage::putFileAs('public', $request->file('task_file'),$cover);
 
@@ -95,6 +96,8 @@ class TaskerController extends Controller
         $task_file->task_id     = $request->task_id;
         $task_file->user_id     = Auth::id();
         $task_file->file_name   = $url;
+        $task_file->type   = $request->file_type;
+        $task_file->size   = $file_size;
         $task_file->save();
 
         Task::where('id', $request->task_id)->update(['updated_by'=> Auth::id()]);

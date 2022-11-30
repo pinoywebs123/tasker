@@ -69,26 +69,26 @@
                   <a class="nav-link active" href="{{route('admin_task_list',Request::segment(2))}}">Task List</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{route('admin_task_file_list',Request::segment(2))}}">Report Files</a>
+                  <a class="nav-link" href="{{route('admin_task_file_list',Request::segment(2))}}">Task Files</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{route('admin_task_schedule_list',Request::segment(2))}}">Report Schedule</a>
+                  <a class="nav-link" href="{{route('admin_task_schedule_list',Request::segment(2))}}">Task Schedule</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{route('admin_task_timeline_list',Request::segment(2))}}">Report Timeline</a>
+                  <a class="nav-link" href="{{route('admin_task_timeline_list',Request::segment(2))}}">Task Timeline</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Report Calendar</a>
+                  <a class="nav-link" href="#">Task Calendar</a>
                 </li>
                 
               </ul>
               <br>
               
               @if($find_project->status_id == 1)
-                <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
+                <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Add Task</button>
               @endif
               
-              <h3 class="text-center">{{$find_assign_project->project->project_type}} to {{isset($find_assign_project->department->name) ? 'Report of '.$find_assign_project->department->name : 'None'}}</h3>
+              <h3 class="text-center">{{$find_assign_project->project->project_type}} to {{isset($find_assign_project->department->name) ? 'Task of '.$find_assign_project->department->name : 'None'}}</h3>
               <p>Arrange By: </p>
               <form  id="arrangeForm" action="" method="GET">
                 @csrf
@@ -155,17 +155,17 @@
                       <td class="align-middle">
 
                         @if($find_assign_project->project->status_id == 1)
-                           <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$task->id}}">Edit</button>
+                           <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$task->id}}" style="width: 80px">Edit</button>
 
                           @if($task->status_id == 1)
-                            <button class="btn btn-primary btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}">Archive</button>
+                            <button class="btn btn-primary btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}" style="width: 80px">Archive</button>
                           
-                             <a href="{{route('share_view_task',['task_id' => $task->id, 'project_id'=> Request::Segment(2)])}}" class="btn btn-info btn-xs">View Task</a>
+                             <a href="{{route('share_view_task',['task_id' => $task->id, 'project_id'=> Request::Segment(2)])}}" class="btn btn-info btn-xs" style="width: 80px">View Task</a>
 
-                            <button class="btn btn-danger btn-xs delete"  data-bs-toggle="modal" data-bs-target="#deleteModal" value="{{$task->id}}">Delete</button>
+                            <button class="btn btn-danger btn-xs delete"  data-bs-toggle="modal" data-bs-target="#deleteModal" value="{{$task->id}}" style="width: 80px">Delete</button>
 
                           @elseif($task->status_id == 0)
-                            <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}">Activate</button>
+                            <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}" style="width: 80px">Activate</button>
                             
                           @endif
                         
@@ -216,15 +216,15 @@
           <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="name">
         </div> 
         <div class="mb-3">
-          <label>Report Description</label>
+          <label>Task Description</label>
           <textarea class="form-control" name="description" required></textarea>
         </div> 
         <div class="mb-3">
-          <label>Report Deadline</label>
+          <label>Task Deadline</label>
           <input type="date" class="form-control" name="deadline" required >
         </div>
         <div class="mb-3">
-          <label>Report Type</label>
+          <label>Task Type</label>
            <select class="form-control" required name="file_type">
             @foreach($file_types as $file)
               <option value="{{$file->name}}">{{$file->name}}</option>
@@ -233,7 +233,7 @@
            </select>
           </div>
         <div class="mb-3">
-          <label>Report File</label>
+          <label>Task File</label>
           <input type="file" name="task_file" class="form-control">
         </div>         
        
@@ -271,7 +271,7 @@
           <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="title" required id="editTitle">
         </div> 
         <div class="mb-3">
-          <label>Report Deadline</label>
+          <label>Task Deadline</label>
           <input type="date" class="form-control" name="deadline" required id="deadline_get">
         </div>
         <div class="mb-3">

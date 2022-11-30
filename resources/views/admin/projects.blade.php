@@ -64,8 +64,8 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Lists of Reports</h6>
-              <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
+              <h6>List of report task compilation</h6>
+              <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">New Report task compilation</button>
               @include('shared.notification')
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -130,15 +130,15 @@
                         
 
                         @if($proj->status_id == 1)
-                          <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$proj->id}}">Edit</button>
-                          <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}">Archive</button>
-                          <button class="btn btn-default btn-xs completed" data-bs-toggle="modal" data-bs-target="#completedModal" value="{{$proj->id}}">Completed</button>
-                          <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs">View Task</a>
+                          <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$proj->id}}" style="width: 90px">Edit</button>
+                          <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Archive</button>
+                          <button class="btn btn-default btn-xs completed" data-bs-toggle="modal" data-bs-target="#completedModal" value="{{$proj->id}}" style="width: 90px">Completed</button>
+                          <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs" style="width: 90px">View Task</a>
                          <!--  <button class="btn btn-primary btn-xs assign" data-bs-toggle="modal" data-bs-target="#assignsModal" value="{{$proj->id}}">Assign Department</button> -->
                         @elseif($proj->status_id == 0)
-                          <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}">Activate</button>
+                          <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Activate</button>
                         @elseif($proj->status_id == 2)
-                          <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs">View Task</a>
+                          <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs" style="width: 90px">View Task</a>
                         @endif
                         
                       </td>
@@ -164,7 +164,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Project Informations</h4>
+          <h4 class="modal-title">Report Information</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -190,7 +190,7 @@
         </div>
 
         <div class="form-group">
-          <label>Select Department</label>
+          <label>Select Assigned Department</label>
           <select class="form-control" name="department_id" required>
             <option></option>
             @foreach($departments as $dept)
@@ -227,7 +227,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Project Informations</h4>
+          <h4 class="modal-title">Update Report Information</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -334,7 +334,7 @@
         @csrf
         <input type="hidden" name="project_id" id="assignTask">
         <div class="form-group">
-          <label>Select Department</label>
+          <label>Select Assigned Department</label>
           <select class="form-control" name="department_id" required>
             <option></option>
             @foreach($departments as $dept)

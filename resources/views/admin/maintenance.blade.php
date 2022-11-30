@@ -339,7 +339,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">File Type Information?</h4>
+          <h4 class="modal-title">File Type Name?</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -368,7 +368,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Report Type Information?</h4>
+          <h4 class="modal-title">Report Type Name?</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -397,7 +397,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Department Information?</h4>
+          <h4 class="modal-title">Department Name?</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
