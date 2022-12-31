@@ -99,6 +99,10 @@ Route::group(['prefix'=> 'tasker','middleware'=> 'auth'], function(){
     Route::post('upload-task',[TaskerController::class, 'upload_task'])->name('upload_task');
     Route::post('update-upload-task',[TaskerController::class, 'update_upload_task'])->name('update_upload_task');
 
+    //Delete comment and files
+    Route::get('/delete-comment/{id}', [TaskerController::class, 'delete_comment'])->name('delete_comment');
+    Route::get('/delete-files/{id}', [TaskerController::class, 'delete_files'])->name('delete_files');
+
 });
 
 

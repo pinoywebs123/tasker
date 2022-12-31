@@ -92,6 +92,11 @@
                         </p>
                         <button type="submit" class="btn btn-danger btn-xs">DOWNLOAD</button>
                         <button type="button" class="btn btn-info btn-xs update_file" value="{{$file->id}}" data-bs-toggle="modal" data-bs-target="#updateFileModal">Update File</button>
+                         @if($file->user_id == Auth::id()) 
+                          <a href="{{route('delete_files',$file->id)}}" class="btn btn-default">
+                            REMOVE
+                          </a>
+                        @endif
                       </form>
 
                     @endforeach
@@ -109,10 +114,17 @@
                       <li class="list-group-item active" aria-current="true">Comment Lists</li>
                       @foreach($comments as $com)
                       <li class="list-group-item">
-                        {{$com->comment}}
+                        {{$com->comment}} 
+                         @if($com->user_id == Auth::id()) 
+                          <a href="{{route('delete_comment',$com->id)}}">
+                            <i class="ni ni-fat-remove text-warning text-sm opacity-10"></i>
+                          </a>
+                        @endif
+
                         <br>
                       
                         <p style="font-size: 8px;">{{$com->user->username}} at {{$com->created_at->diffForHumans()}}</p>
+                       
                       </li>
 
                       @endforeach  

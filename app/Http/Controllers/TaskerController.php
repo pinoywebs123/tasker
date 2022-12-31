@@ -61,9 +61,9 @@ class TaskerController extends Controller
     {
         $find_project = Project::find($project_id);
         $find_task = Task::find($task_id);
-        $comments = Comment::where('task_id', $task_id)->orderBy('id','desc')->get();
         $file_types = FileType::all();
 
+        $comments = Comment::where('task_id', $task_id)->orderBy('id','desc')->get();
         $task_files = TaskFile::where('task_id', $task_id)->where('file_name','!=','null')->get();
 
         return view('tasker.view_task',compact('find_project','find_task','comments','task_files','file_types'));
@@ -127,5 +127,19 @@ class TaskerController extends Controller
 
         
         
+    }
+
+    public function delete_comment($id)
+    {
+        $check_comment = Comment::where('id',$id)->where('user_id', Auth::id())->first();
+        $check_comment->delete();
+        return back()->with('success','Comment Remove Successfully');
+    }
+
+    public function delete_files($id)
+    {
+        $check_comment = TaskFile::where('id',$id)->where('user_id', Auth::id())->first();
+        $check_comment->delete();
+        return back()->with('success','File Remove Successfully');
     }
 }    

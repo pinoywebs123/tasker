@@ -14,6 +14,7 @@ use App\Models\TaskFile;
 use App\Models\Assign;
 use App\Models\ReportType;
 use App\Models\FileType;
+use App\Models\Comment;
 
 use App\Models\Department;
 use App\Models\ProjectDepartment;
@@ -568,10 +569,11 @@ class AdminController extends Controller
 
         $tasks = Task::where('project_id', $id)->get();
 
-
+        $comments = Comment::orderBy('id','desc')->with('user')->get();
+        $task_files = TaskFile::where('file_name','!=','null')->with('user')->get();
 
        $find_assign_project = ProjectDepartment::where('project_id',$id)->first();
 
-        return view('admin.tasks_timeline',compact('find_project','find_assign_project','tasks'));
+        return view('admin.tasks_timeline',compact('find_project','find_assign_project','tasks','comments','task_files'));
     }
 }

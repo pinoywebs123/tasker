@@ -24,7 +24,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+    <style type="text/css">
+      .fc-time{
+        display: none;
+      }
+    </style>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -135,7 +140,24 @@
   <script src="{{URL::to('/assets/js/argon-dashboard.min.js?v=2.0.4')}}"></script>
  
   <script>
-    var calendar = $('#calendar').fullCalendar({});
+    $('#calendar').fullCalendar({
+      events: [
+        @foreach($comments as $com)
+        {
+          title: '{{$com->user->first_name}} commented',
+          start: '{{$com->created_at}}'
+        },
+        @endforeach
+        @foreach($task_files as $file)
+        {
+          title: '{{$file->user->first_name}} upload file',
+          start: '{{$com->created_at}}'
+        },
+        @endforeach
+        
+        
+      ]
+    });
   </script>
 </body>
 
