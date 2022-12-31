@@ -151,7 +151,7 @@
         @foreach($task_files as $file)
         {
           title: '{{$file->user->first_name}} upload file',
-          start: '{{$com->created_at}}'
+          start: '{{$file->created_at}}'
         },
         @endforeach
         
