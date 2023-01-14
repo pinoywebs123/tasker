@@ -19,6 +19,7 @@
   <link href="{{URL::to('/assets/css/nucleo-svg.css')}}" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="{{URL::to('/assets/css/argon-dashboard.css?v=2.0.4')}}" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -65,12 +66,14 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>List of report task compilation</h6>
-              <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">New Report task compilation</button>
+              @if(Auth::user()->getRoleNames()[0] != 'manager_limited')
+                <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">New Report task compilation</button>
+              @endif
               @include('shared.notification')
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
+                <table class="table align-items-center mb-0 display" id="example" style="width:100%">
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
@@ -130,11 +133,13 @@
                         
 
                         @if($proj->status_id == 1)
+                        @if(Auth::user()->getRoleNames()[0] != 'manager_limited')
                           <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$proj->id}}" style="width: 90px">Edit</button>
                           <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Archive</button>
                           <button class="btn btn-default btn-xs completed" data-bs-toggle="modal" data-bs-target="#completedModal" value="{{$proj->id}}" style="width: 90px">Completed</button>
                           <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs" style="width: 90px">View Task</a>
                          <!--  <button class="btn btn-primary btn-xs assign" data-bs-toggle="modal" data-bs-target="#assignsModal" value="{{$proj->id}}">Assign Department</button> -->
+                         @endif
                         @elseif($proj->status_id == 0)
                           <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Activate</button>
                         @elseif($proj->status_id == 2)
@@ -374,8 +379,11 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{URL::to('/assets/js/argon-dashboard.min.js?v=2.0.4')}}"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
+      $('#example').DataTable();
+      
       var find_project_url = "{{route('admin_find_projects')}}";
       var token = "{{Session::token()}}";
 
