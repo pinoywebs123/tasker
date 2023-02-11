@@ -157,6 +157,9 @@ class AdminController extends Controller
         }else if($find_project->status_id == 0)
         {
             $status_id = 1;
+        }else if($find_project->status_id == 2)
+        {
+            $status_id = 1;
         }
 
         $find_project->update(['status_id'=> $status_id]);
@@ -575,5 +578,25 @@ class AdminController extends Controller
        $find_assign_project = ProjectDepartment::where('project_id',$id)->first();
 
         return view('admin.tasks_timeline',compact('find_project','find_assign_project','tasks','comments','task_files'));
+    }
+
+    public function user_settings()
+    {
+        return view('admin.user_settings');
+    }
+
+    public function user_settings_check(Request $request)
+    {
+        $this->validate($request, [
+            'password' => 'min:6',
+            'repeat_password' => 'required_with:password|same:password|min:6'
+        ]);
+        
+        $find_user = User::find(Auth::id());
+        $find_user->update([
+            'password'=> bcrypt($request->password)
+        ]);
+
+        return back()->with('success', 'Password Updated Successfully');
     }
 }

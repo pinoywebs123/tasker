@@ -21,6 +21,8 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
     
     Route::get('/home',[AdminController::class, 'home'])->name('admin_home');
     Route::get('/logout',[AdminController::class, 'logout'])->name('admin_logout');
+    Route::get('/user-settings',[AdminController::class, 'user_settings'])->name('user_settings');
+    Route::post('/user-settings',[AdminController::class, 'user_settings_check'])->name('user_settings_check');
 
     
     Route::post('/find-user',[AdminController::class, 'findUser'])->name('admin_find_user');

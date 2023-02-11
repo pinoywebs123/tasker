@@ -144,6 +144,7 @@
                           <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Activate</button>
                         @elseif($proj->status_id == 2)
                           <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs" style="width: 90px">View Task</a>
+                          <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Activate</button>
                         @endif
                         
                       </td>
