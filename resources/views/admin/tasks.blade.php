@@ -163,6 +163,7 @@
                              <a href="{{route('share_view_task',['task_id' => $task->id, 'project_id'=> Request::Segment(2)])}}" class="btn btn-info btn-xs" style="width: 80px">View Task</a>
 
                             <button class="btn btn-danger btn-xs delete"  data-bs-toggle="modal" data-bs-target="#deleteModal" value="{{$task->id}}" style="width: 80px">Delete</button>
+                            <button class="btn btn-primary btn-xs upload" data-bs-toggle="modal" data-bs-target="#uploadModal" value="{{$task->id}}">Upload</button> 
 
                           @elseif($task->status_id == 0)
                             <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}" style="width: 80px">Activate</button>
@@ -350,6 +351,51 @@
     </div>
   </div>
 
+  <div class="modal" id="uploadModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Upload File?</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('upload_task')}}" method="POST" enctype="multipart/form-data">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        
+        
+        <input type="text" name="task_id" id="task_list_id">
+         <div class="mb-3">
+          <label>Task Type</label>
+           <select class="form-control" required name="file_type">
+             <option value="Image">Photo</option>
+             <option value="Document">Document</option>
+             <option value="Physical Task">Physical Task</option>
+           </select>
+        </div>
+
+        <div class="mb-3">
+          <label>Task File</label>
+          <input type="file" name="task_file" class="form-control" required>
+        </div> 
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Submit</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
 
   
   <!--   Core JS Files   -->
@@ -379,6 +425,12 @@
       $(".archive").click(function(){
         var task_id = $(this).val();
         $("#statusProjectId").val(task_id);
+
+      });
+
+      $(".upload").click(function(){
+        var task_id = $(this).val();
+        $("#task_list_id").val(task_id);
 
       });
 
