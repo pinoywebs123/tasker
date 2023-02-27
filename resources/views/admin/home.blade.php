@@ -77,7 +77,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Staff Name</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Role</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Username</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Position</th>
+                      
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
                      
                       <th class="text-secondary opacity-7"></th>
@@ -101,9 +101,7 @@
                         
                       </td>
                       
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-primary" style="width: 150px">{{$user->position->name}}</span>
-                      </td>
+                     
                       <td class="align-middle text-center text-sm">
                         <span class="badge badge-sm bg-gradient-info" style="width: 300px">{{$user->department->name}}</span>
                       </td>
@@ -155,14 +153,7 @@
                   </div>
 
 
-                  <div class="mb-3">
-                    <label>Select User Role</label>
-                    <select class="form-control" name="position" required id="position">
-                      @foreach($positions as $post)
-                        <option value="{{$post->id}}">{{$post->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
+                
 
                   <div class="mb-3">
                     <label>Select Department</label>
@@ -262,17 +253,15 @@
                     </select>
                   </div>
 
-                  <div class="mb-3">
-                    <label>Select User Role</label>
-                    <select class="form-control" name="position" required id="position_create">
-                      
-                    </select>
-                  </div>
+                
 
                   <div class="mb-3">
                     <label>Select User Type</label>
-                    <input type="hidden" name="user_type" id="user_type_create_value">
-                    <p id="user_type_create" style="margin-left: 10px;"></p>
+                    <select name="user_type" class="form-control">
+                      <option value="1">OI</option>
+                      <option value="2">College Administrator</option>
+                    </select>
+                   
                   </div>
 
                   

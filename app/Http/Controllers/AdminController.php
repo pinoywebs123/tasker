@@ -91,7 +91,7 @@ class AdminController extends Controller
         $find_user = User::find($request->user_id);
 
         if($request->password == null){
-            $find_user->position_id     = $request->position;
+            $find_user->position_id     = 99;
             $find_user->department_id   = $request->department;
             $find_user->first_name      = $request->first_name;
             $find_user->last_name       = $request->last_name;
@@ -99,7 +99,7 @@ class AdminController extends Controller
             $find_user->username        = strtolower($request->first_name.'.'.$request->last_name);
         }else 
         {
-            $find_user->position_id     = $request->position;
+            $find_user->position_id     = 99;
             $find_user->department_id   = $request->department;
             $find_user->first_name      = $request->first_name;
             $find_user->last_name       = $request->last_name;

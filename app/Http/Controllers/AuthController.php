@@ -77,7 +77,7 @@ class AuthController extends Controller
             'user_type' => ['required'],
             'first_name' => ['required'],
             'last_name' => ['required'],
-            'position' => ['required'],
+            // 'position' => ['required'],
             'department' => ['required'],
             'password' => ['required','max:20'],
             'repeat_password' => ['required','same:password'],
@@ -89,7 +89,7 @@ class AuthController extends Controller
 
         if($data['user_type'] == 2)
         {
-            $user->position_id      = $validatedData['position'];
+            $user->position_id      = 99;
             $user->department_id    = $validatedData['department'];
             $user->first_name       = strtolower($validatedData['first_name']);
             $user->last_name        = strtolower($validatedData['last_name']);
@@ -131,7 +131,7 @@ class AuthController extends Controller
 
         }else if($data['user_type'] == 1)
         {
-            $user->position_id      = $validatedData['position'];
+            $user->position_id      = 99;
             $user->department_id    = $validatedData['department'];
             $user->first_name       = strtolower($validatedData['first_name']);
             $user->last_name        = strtolower($validatedData['last_name']);
@@ -147,7 +147,7 @@ class AuthController extends Controller
             return 'Invalid User Type';
         }
 
-        Mail::to($validatedData['email'])->send(new NewUser($validatedData, $user->id));
+        //Mail::to($validatedData['email'])->send(new NewUser($validatedData, $user->id));
 
         return back()->with('success','Successfully Registered');
 
