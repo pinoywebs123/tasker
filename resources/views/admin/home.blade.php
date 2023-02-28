@@ -93,7 +93,16 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">{{strtoupper($user->getRoleNames()[0])}}</p>
+                        <p class="text-xs font-weight-bold mb-0">
+                          @if($user->getRoleNames()[0] == 'admin')
+                            {{strtoupper('OI')}}
+                          @elseif($user->getRoleNames()[0] == 'manager') 
+                          {{strtoupper('College Administrator')}}
+
+                          @elseif($user->getRoleNames()[0] == 'tasker')
+                            {{strtoupper('Faculty')}}
+                          @endif
+                        </p>
                         
                       </td>
                        <td>

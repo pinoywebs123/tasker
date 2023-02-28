@@ -65,44 +65,41 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              Assign User
+              Department List
+              
             </div>
             <div class="card-body px-0 pt-0 pb-2">
              <div class="container">
-               <form action="{{route('admin_assign_user')}}" method="POST">
-               @csrf
-               <div class="form-group">
-                 <label>Department</label>
-                 <select class="form-control" name="department_id" required>
-                   @foreach($departments as $dept)
-                      <option value="{{$dept->id}}">{{strtoupper($dept->name)}}</option>
+              <button data-bs-toggle="modal" data-bs-target="#departmentModal" class="btn btn-primary btn-xs">New</button>
+              <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                     
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($departments as $dept)
+                      <tr>
+                        <td>
+                        <div class="d-flex px-2 py-1">
+                          
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{strtoupper($dept->name)}}</h6>
+                            
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="{{route('admin_delete_department', $dept->id)}}" class="btn btn-danger btn-xs">Delete</a>
+                      </td>
+                      </tr>
                     @endforeach
-                 </select>
-               </div>
-
-               <div class="form-group">
-                 <label>Position</label>
-                 <select class="form-control" name="position_id" required>
-                   @foreach($positions as $post)
-                      <option value="{{$post->id}}">{{strtoupper($post->name)}}</option>
-                    @endforeach
-                 </select>
-               </div>
-
-               <div class="form-group">
-                 <label>User type</label>
-                 <select class="form-control" name="role_id" required>
-                   @foreach($roles as $role)
-                    <option value="{{$role->id}}">{{strtoupper($role->name)}}</option>
-                   @endforeach
-                 </select>
-               </div>
-
-               <div class="form-group">
-                 <button type="submit" class="btn btn-primary">Submit</button>
-               </div>
-               
-             </form>
+                    
+                  </tbody>
+                </table>
              </div>
             </div>
           </div>
@@ -112,7 +109,7 @@
             
         @include('shared.notification')
 
-        <div class="col-4">
+       <!--  <div class="col-4">
           <div class="card mb-4">
             <div class="card-header pb-0">
               Department List
@@ -153,9 +150,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
-        <div class="col-4">
+        <!-- <div class="col-4">
           <div class="card mb-4">
             <div class="card-header pb-0">
               Position List
@@ -196,9 +193,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
-        <div class="col-4">
+       <!--  <div class="col-4">
           <div class="card mb-4">
             <div class="card-header pb-0">
               User Type List
@@ -232,7 +229,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
 
       </div>
