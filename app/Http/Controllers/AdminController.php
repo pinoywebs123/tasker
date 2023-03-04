@@ -599,4 +599,36 @@ class AdminController extends Controller
 
         return back()->with('success', 'Password Updated Successfully');
     }
+
+    public function createFaculty(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => ['required', 'unique:users', 'max:255'],
+            //'user_type' => ['required'],
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            // 'position' => ['required'],
+            //'department' => ['required'],
+            'password' => ['required','max:20'],
+            'repeat_password' => ['required','same:password'],
+        ]);
+
+
+        $user = new User;
+
+        $user->position_id      = 99;
+        $user->department_id    = Auth::user()->department_id;
+        $user->first_name       = strtolower($validatedData['first_name']);
+        $user->last_name        = strtolower($validatedData['last_name']);
+        $user->username         = strtolower($validatedData['first_name'].'.'.$validatedData['last_name']);
+        $user->email            = $validatedData['email'];
+        $user->password         = bcrypt($validatedData['password']);
+        $user->status_id        = 0;
+        $user->save();
+
+        $user->assignRole('tasker');
+
+        return back()->with('success', 'User Created Successfully');
+
+    }
 }

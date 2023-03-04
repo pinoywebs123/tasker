@@ -78,6 +78,9 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
     Route::post('/create-file-type',[AdminController::class, 'createFileType'])->name('admin_create_file_type');
     Route::get('/delete-file-type/{id}',[AdminController::class, 'deleteFileType'])->name('admin_delete_file_type');
 
+    //create faculty as collge admin
+    Route::post('/create-faculty',[AdminController::class, 'createFaculty'])->name('admin_create_faculty');
+
 
 });
 
