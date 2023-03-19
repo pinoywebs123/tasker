@@ -368,7 +368,7 @@
         @csrf
         
         
-        <input type="text" name="task_id" id="task_list_id">
+        <input type="hidden" name="task_id" id="task_list_id">
          <div class="mb-3">
           <label>Task Type</label>
            <select class="form-control" required name="file_type">

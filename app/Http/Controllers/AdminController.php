@@ -15,11 +15,13 @@ use App\Models\Assign;
 use App\Models\ReportType;
 use App\Models\FileType;
 use App\Models\Comment;
+use App\Models\TaskFirstFolder;
 
 use App\Models\Department;
 use App\Models\ProjectDepartment;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Collection;
+use File;
 
 class AdminController extends Controller
 {
@@ -222,6 +224,12 @@ class AdminController extends Controller
     public function create_task(Request $request)
     {
 
+        $path = public_path($request->title.'/');
+
+        if(!File::isDirectory($path)){
+            File::makeDirectory($path, 0777, true, true);
+
+        }
 
        if(isset($request->task_file))
        {
@@ -233,6 +241,8 @@ class AdminController extends Controller
         $url = 'null';
         $file_size = 'null';
        }
+
+       
 
         $task = new Task;
         $task->project_id   = $request->project_id;
@@ -251,8 +261,26 @@ class AdminController extends Controller
         $task_file->size     =$file_size;
         $task_file->save();
 
+        $new_folder = new TaskFirstFolder;
+        $new_folder->task_id = $task->id;
+        $new_folder->user_id = Auth::id();
+        $new_folder->folder_name = $request->title;
+        $new_folder->save();
+
         
         return back()->with('success','Task Created Successfully');
+    }
+
+    public function folders()
+    {
+        $folders = TaskFirstFolder::where('user_id',Auth::id())->get();
+        return view('admin.folders',compact('folders'));
+    }
+
+    public function folders_files($id)
+    {
+        $folder_files = TaskFile::where('task_id',$id)->where('user_id',Auth::id())->where('size','!=','null')->get();
+        return view('admin.folder_files',compact('folder_files'));
     }
 
     public function create_sub_task(Request $request)

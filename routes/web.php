@@ -81,6 +81,10 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
     //create faculty as collge admin
     Route::post('/create-faculty',[AdminController::class, 'createFaculty'])->name('admin_create_faculty');
 
+    //folders
+    Route::get('/folders',[AdminController::class, 'folders'])->name('admin_folders');
+    Route::get('/folder/{id}',[AdminController::class, 'folders_files'])->name('admin_folders_files');
+
 
 });
 
@@ -88,7 +92,7 @@ Route::group(['prefix'=> 'tasker','middleware'=> 'role:tasker'], function(){
 
     //tasker
     Route::get('/home',[TaskerController::class, 'home'])->name('tasker_home');
-    Route::get('/{id}/task-list',[TaskerController::class, 'task_list'])->name('tasker_task_list');
+    Route::get('/{id}/task-list-tasker',[TaskerController::class, 'task_list'])->name('tasker_task_list');
     Route::get('/{id}/update-task',[TaskerController::class, 'update_task'])->name('tasker_update_task');
 
 });
