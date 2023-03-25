@@ -90,11 +90,11 @@
                           ?>
                          
                         </p>
-                        <button type="submit" class="btn btn-danger btn-xs">DOWNLOAD</button>
+                        <button type="submit" class="btn btn-danger btn-xs">Download</button>
                         <button type="button" class="btn btn-info btn-xs update_file" value="{{$file->id}}" data-bs-toggle="modal" data-bs-target="#updateFileModal">Update File</button>
                          @if($file->user_id == Auth::id()) 
                           <a href="{{route('delete_files',$file->id)}}" class="btn btn-default">
-                            REMOVE
+                            Remove
                           </a>
                         @endif
                       </form>
@@ -102,7 +102,7 @@
                     @endforeach
                   
 
-                  <button class="btn btn-primary btn-xs upload" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload</button> 
+                  <button class="btn btn-primary btn-xs upload" data-bs-toggle="modal" data-bs-target="#uploadModal" style="width: 90px;">Upload</button> 
                   </p>
                   <br>
                   <br>

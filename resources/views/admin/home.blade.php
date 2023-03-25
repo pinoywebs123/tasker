@@ -239,12 +239,15 @@
                   @csrf
                   
                   <div class="mb-3">
+                    <p style="color: red; margin-bottom: -10px;">*</p>
                     <input type="text" class="form-control" placeholder="First Name" aria-label="Name" name="first_name" required id="firstName1">
                   </div>
                   <div class="mb-3">
+                    <p style="color: red; margin-bottom: -10px;">*</p>
                     <input type="text" class="form-control" placeholder="Last Name" aria-label="Name" name="last_name" required id="lastName1">
                   </div>
                   <div class="mb-3">
+                    <p style="color: red; margin-bottom: -10px;">*</p>
                     <label>Email must be valid (@su.edu.ph) format</label>
                     <input type="email" class="form-control email_create" placeholder="Email" aria-label="Email" name="email" required id="email">
                   </div>
@@ -253,6 +256,7 @@
 
 
                   <div class="mb-3">
+                    <p style="color: red; margin-bottom: -10px;">*</p>
                     <label>Select Department</label>
                     <select class="form-control" name="department" required id="department_create">
                       <option value="0"></option>
@@ -265,6 +269,7 @@
                 
 
                   <div class="mb-3">
+                    <p style="color: red; margin-bottom: -10px;">*</p>
                     <label>Select User Type</label>
                     <select name="user_type" class="form-control">
                       <option value="1">OI</option>
@@ -276,11 +281,13 @@
                   
 
                   <div class="mb-3">
+                    <p style="color: red; margin-bottom: -10px;">*</p>
                     <label>Enter Password</label>
                     <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password">
                   </div>
 
                   <div class="mb-3">
+                    <p style="color: red; margin-bottom: -10px;">*</p>
                     <label>Re-Enter Password</label>
                     <input type="password" class="form-control" placeholder="Repeat Password" aria-label="Password" name="repeat_password" required>
                   </div>

@@ -66,8 +66,13 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>List of report task compilation</h6>
-              @if(Auth::user()->getRoleNames()[0] != 'manager_limited' || Auth::user()->getRoleNames()[0] != 'manager')
+              @if(Auth::user()->getRoleNames()[0] == 'admin')
                 <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">New Report task compilation</button>
+                
+              @endif
+             
+               @if(Auth::user()->getRoleNames()[0] == 'manager')
+               
                 <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModalUser">New user Profile</button>
               @endif
              
