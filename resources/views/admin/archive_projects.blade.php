@@ -119,6 +119,7 @@
                       </td>
                       <td class="align-middle text-center">
                         <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs">View</a>
+                        <a href="{{route('admin_restore_projects',$proj->id)}}" class="btn btn-info btn-xs">Restore</a>
                       </td>
                       
                       

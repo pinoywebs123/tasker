@@ -37,6 +37,7 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
     Route::post('/completed-projects',[AdminController::class, 'completedProject'])->name('admin_completed_project');
     Route::post('/find-project',[AdminController::class, 'findProjects'])->name('admin_find_projects');
     Route::post('/update-project',[AdminController::class, 'updateProjects'])->name('admin_update_projects');
+    Route::get('/restore-projects/{id}',[AdminController::class, 'restore_projects'])->name('admin_restore_projects');
 
     //task
     Route::get('/{id}/task-list',[AdminController::class, 'task_list'])->name('admin_task_list');

@@ -83,6 +83,16 @@ class AdminController extends Controller
         return view('admin.archive_projects',compact('projects'));
     }
 
+    public function restore_projects($id)
+    {
+        $find = Project::find($id);
+        if($find)
+        {
+            $find->update(['status_id'=> 1]);
+            return back()->with('success','Project Restore Successfully');
+        }
+    }
+
     public function findUser(Request $request)
     {
         return response()->json(User::find($request->user_id));
