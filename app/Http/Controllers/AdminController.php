@@ -49,9 +49,10 @@ class AdminController extends Controller
              $project_department = new Collection(DB::table('users')
                         ->join('project_departments','users.department_id','=','project_departments.department_id')
                         ->join('projects','project_departments.project_id','=','projects.id')
+                        ->join('departments','project_departments.department_id','=','departments.id')
                         ->where('users.id', Auth::id())
                         ->where('projects.status_id', '!=', 0)
-                        ->select('projects.id','projects.title','projects.description','projects.status_id','projects.created_at','projects.user_id','projects.project_type','projects.deadline')
+                        ->select('projects.id','projects.title','projects.description','projects.status_id','projects.created_at','projects.user_id','projects.project_type','projects.deadline','departments.name as department_name')
                         ->get());
 
             $projects_created = new Collection(Project::where('user_id', Auth::id())->select('projects.id','projects.title','projects.description','projects.status_id','projects.created_at','projects.user_id','projects.project_type','projects.deadline')->get());
@@ -63,7 +64,10 @@ class AdminController extends Controller
            
         }else
         {
-            $projects = Project::where('status_id',1)->orWhere('status_id',2)->get();
+             $projects = Project::where('status_id',1)->orWhere('status_id',2)
+                        ->join('project_departments','projects.id','=','project_departments.project_id')
+                        ->join('departments','project_departments.department_id','=','departments.id')
+                        ->get();
         }
 
         $report_types = ReportType::all();

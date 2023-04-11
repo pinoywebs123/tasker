@@ -85,7 +85,9 @@
               <br>
               
               @if($find_project->status_id == 1)
-                <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Add Task</button>
+                @if(Auth::user()->getRoleNames()[0] == 'admin')
+                  <button class="btn btn-info btn-xs edit" data-bs-toggle="modal" data-bs-target="#createModal">Add Task</button>
+                @endif
               @endif
               
               <h3 class="text-center">{{$find_assign_project->project->project_type}} to {{isset($find_assign_project->department->name) ? 'Task of '.$find_assign_project->department->name : 'None'}}</h3>
@@ -155,15 +157,21 @@
                       <td class="align-middle">
 
                         @if($find_assign_project->project->status_id == 1)
+                          @if(Auth::user()->getRoleNames()[0] == 'admin')
                            <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$task->id}}" style="width: 80px">Edit</button>
+                           @endif
 
                           @if($task->status_id == 1)
+                            @if(Auth::user()->getRoleNames()[0] == 'admin')
                             <button class="btn btn-primary btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}" style="width: 80px">Archive</button>
-                          
+
+                             <button class="btn btn-danger btn-xs delete"  data-bs-toggle="modal" data-bs-target="#deleteModal" value="{{$task->id}}" style="width: 80px">Delete</button>
+                           
+                            @endif 
+                             <button class="btn btn-primary btn-xs upload" data-bs-toggle="modal" data-bs-target="#uploadModal" value="{{$task->id}}">Upload</button>
                              <a href="{{route('share_view_task',['task_id' => $task->id, 'project_id'=> Request::Segment(2)])}}" class="btn btn-info btn-xs" style="width: 80px">View Task</a>
 
-                            <button class="btn btn-danger btn-xs delete"  data-bs-toggle="modal" data-bs-target="#deleteModal" value="{{$task->id}}" style="width: 80px">Delete</button>
-                            <button class="btn btn-primary btn-xs upload" data-bs-toggle="modal" data-bs-target="#uploadModal" value="{{$task->id}}">Upload</button> 
+                           
 
                           @elseif($task->status_id == 0)
                             <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}" style="width: 80px">Activate</button>

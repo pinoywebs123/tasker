@@ -106,7 +106,9 @@
                   </p>
                   <br>
                   <br>
-                  <button class="btn bg-gradient-dark btn-xs" value="{{Request::segment(3)}}" data-bs-toggle="modal" data-bs-target="#createSubModal">Add Subtask</button>
+                   @if(Auth::user()->getRoleNames()[0] == 'admin')
+                    <button class="btn bg-gradient-dark btn-xs" value="{{Request::segment(3)}}" data-bs-toggle="modal" data-bs-target="#createSubModal">Add Subtask</button>
+                  @endif
                   <br>
                   <br>
                   <ul class="list-group">

@@ -239,16 +239,16 @@
                   @csrf
                   
                   <div class="mb-3">
-                    <p style="color: red; margin-bottom: -10px;">*</p>
+                    <label>First Name <span style="color: red; margin-bottom: -10px;">*</span></label>
                     <input type="text" class="form-control" placeholder="First Name" aria-label="Name" name="first_name" required id="firstName1">
                   </div>
                   <div class="mb-3">
-                    <p style="color: red; margin-bottom: -10px;">*</p>
+                    <label>Last Name <span style="color: red; margin-bottom: -10px;">*</span></label>
                     <input type="text" class="form-control" placeholder="Last Name" aria-label="Name" name="last_name" required id="lastName1">
                   </div>
                   <div class="mb-3">
-                    <p style="color: red; margin-bottom: -10px;">*</p>
-                    <label>Email must be valid (@su.edu.ph) format</label>
+                    
+                    <label>Email must be valid (@su.edu.ph) format <span style="color: red; margin-bottom: -10px;">*</span></label>
                     <input type="email" class="form-control email_create" placeholder="Email" aria-label="Email" name="email" required id="email">
                   </div>
 
@@ -256,8 +256,8 @@
 
 
                   <div class="mb-3">
-                    <p style="color: red; margin-bottom: -10px;">*</p>
-                    <label>Select Department</label>
+                    
+                    <label>Select Department <span style="color: red; margin-bottom: -10px;">*</span></label>
                     <select class="form-control" name="department" required id="department_create">
                       <option value="0"></option>
                        @foreach($departments as $dept)
@@ -269,8 +269,8 @@
                 
 
                   <div class="mb-3">
-                    <p style="color: red; margin-bottom: -10px;">*</p>
-                    <label>Select User Type</label>
+                    
+                    <label>Select User Type <span style="color: red; margin-bottom: -10px;">*</span></label>
                     <select name="user_type" class="form-control">
                       <option value="1">OI</option>
                       <option value="2">College Administrator</option>
@@ -281,14 +281,14 @@
                   
 
                   <div class="mb-3">
-                    <p style="color: red; margin-bottom: -10px;">*</p>
-                    <label>Enter Password</label>
+                    
+                    <label>Enter Password <span style="color: red; margin-bottom: -10px;">*</span></label>
                     <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password">
                   </div>
 
                   <div class="mb-3">
-                    <p style="color: red; margin-bottom: -10px;">*</p>
-                    <label>Re-Enter Password</label>
+                    
+                    <label>Re-Enter Password <span style="color: red; margin-bottom: -10px;">*</span></label>
                     <input type="password" class="form-control" placeholder="Repeat Password" aria-label="Password" name="repeat_password" required>
                   </div>
                   

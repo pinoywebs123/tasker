@@ -90,6 +90,7 @@
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project Type</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deadline</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">College</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -136,17 +137,25 @@
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{$proj->deadline}}</span>
                       </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{$proj->name}}</span>
+                      </td>
                       <td class="align-middle">
                         
 
                         @if($proj->status_id == 1)
                         @if(Auth::user()->getRoleNames()[0] != 'manager_limited')
-                          <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$proj->id}}" style="width: 90px">Edit</button>
-                          <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Archive</button>
+                          
                           <button class="btn btn-default btn-xs completed" data-bs-toggle="modal" data-bs-target="#completedModal" value="{{$proj->id}}" style="width: 90px">Completed</button>
                           <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs" style="width: 90px">View Task</a>
                          <!--  <button class="btn btn-primary btn-xs assign" data-bs-toggle="modal" data-bs-target="#assignsModal" value="{{$proj->id}}">Assign Department</button> -->
                          @endif
+
+                         @if(Auth::user()->getRoleNames()[0] == 'admin')
+                         <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$proj->id}}" style="width: 90px">Edit</button>
+                          <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Archive</button>
+                         @endif
+                         
                         @elseif($proj->status_id == 0)
                           <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Activate</button>
                         @elseif($proj->status_id == 2)
@@ -385,24 +394,26 @@
                   @csrf
                   
                   <div class="mb-3">
+                    <label>First Name <span style="color: red; margin-bottom: -10px;">*</span></label>
                     <input type="text" class="form-control" placeholder="First Name" aria-label="Name" name="first_name" required id="firstName1">
                   </div>
                   <div class="mb-3">
+                    <label>Last Name <span style="color: red; margin-bottom: -10px;">*</span></label>
                     <input type="text" class="form-control" placeholder="Last Name" aria-label="Name" name="last_name" required id="lastName1">
                   </div>
                   <div class="mb-3">
-                    <label>Email must be valid (@su.edu.ph) format</label>
+                    <label>Email must be valid (@su.edu.ph) format <span style="color: red; margin-bottom: -10px;">*</span></label>
                     <input type="email" class="form-control email_create" placeholder="Email" aria-label="Email" name="email" required id="email">
                   </div>
 
             
                   <div class="mb-3">
-                    <label>Enter Password</label>
+                    <label>Enter Password <span style="color: red; margin-bottom: -10px;">*</span></label>
                     <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password">
                   </div>
 
                   <div class="mb-3">
-                    <label>Re-Enter Password</label>
+                    <label>Re-Enter Password <span style="color: red; margin-bottom: -10px;">*</span></label>
                     <input type="password" class="form-control" placeholder="Repeat Password" aria-label="Password" name="repeat_password" required>
                   </div>
                   
