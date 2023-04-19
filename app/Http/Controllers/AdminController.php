@@ -64,9 +64,10 @@ class AdminController extends Controller
            
         }else
         {
-             $projects = Project::where('status_id',1)->orWhere('status_id',2)
+              $projects = Project::where('status_id',1)->orWhere('status_id',2)
                         ->join('project_departments','projects.id','=','project_departments.project_id')
                         ->join('departments','project_departments.department_id','=','departments.id')
+                        ->select('projects.id','projects.status_id','projects.created_at','projects.project_type','projects.deadline','projects.title')
                         ->get();
         }
 

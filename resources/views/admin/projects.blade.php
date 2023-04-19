@@ -122,9 +122,9 @@
                         @if(Auth::user()->getRoleNames()[0] == 'manager_limited')
                           <span class="text-secondary text-xs font-weight-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
                         @elseif(Auth::user()->getRoleNames()[0] == 'manager_limited')
-                          <span class="text-secondary text-xs font-weight-bold">{{$proj->user->first_name}} {{Auth::user()->last_name}}</span>
+                          <span class="text-secondary text-xs font-weight-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
                         @else
-                        <span class="text-secondary text-xs font-weight-bold">{{$proj->user->first_name}} {{Auth::user()->last_name}}</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
                         @endif
                         
                       </td>
@@ -138,7 +138,7 @@
                         <span class="text-secondary text-xs font-weight-bold">{{$proj->deadline}}</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{$proj->name}}</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$proj->title}}</span>
                       </td>
                       <td class="align-middle">
                         
