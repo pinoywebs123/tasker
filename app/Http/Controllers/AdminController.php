@@ -44,7 +44,7 @@ class AdminController extends Controller
     {
         $departments = Department::all();
 
-        if(Auth::user()->getRoleNames()[0] == 'manager_limited')
+        if(Auth::user()->getRoleNames()[0] == 'manager')
         {
              $project_department = new Collection(DB::table('users')
                         ->join('project_departments','users.department_id','=','project_departments.department_id')
