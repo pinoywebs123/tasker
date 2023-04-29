@@ -96,7 +96,7 @@
                 @csrf
                 <select id="arrangeSelect" name="arrange_by">
                   <option>Select Here</option>
-                  <option value="Normal">Normal</option>
+                  <option value="Normal">All Task</option>
                   <option value="Sub-Task">Sub-Task</option>
                 </select>
               </form>
@@ -156,7 +156,7 @@
                       </td>
                       <td class="align-middle">
 
-                        @if($find_assign_project->project->status_id == 1)
+                       
                           @if(Auth::user()->getRoleNames()[0] == 'admin')
                            <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$task->id}}" style="width: 80px">Edit</button>
                            @endif
@@ -178,7 +178,9 @@
                             
                           @endif
                         
-                        @endif
+                      
+
+                        
 
                        
 

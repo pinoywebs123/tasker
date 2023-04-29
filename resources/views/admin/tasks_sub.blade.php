@@ -92,7 +92,7 @@
                 @csrf
                 <select id="arrangeSelect" name="arrange_by">
                   <option>Select Here</option>
-                  <option value="Normal">Normal</option>
+                  <option value="Normal">All Task</option>
                   <option value="Sub-Task">Sub-Task</option>
                 </select>
               </form>

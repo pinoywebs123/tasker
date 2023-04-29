@@ -674,4 +674,16 @@ class AdminController extends Controller
         return back()->with('success', 'User Created Successfully');
 
     }
+
+    public function delete_all_projects(Request $request)
+    {
+        $find = Project::find($request->project_id);
+        if( $find )
+        {
+            Task::where('project_id',$find->id)->delete();
+            $find->delete();
+
+            return back()->with('success', 'Project and other data related has been Deleted Successfully');
+        }
+    }
 }

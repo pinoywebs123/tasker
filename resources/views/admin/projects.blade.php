@@ -90,7 +90,7 @@
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project Type</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deadline</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">College</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -161,6 +161,10 @@
                         @elseif($proj->status_id == 2)
                           <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs" style="width: 90px">View Task</a>
                           <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Activate</button>
+
+                           @if(Auth::user()->getRoleNames()[0] == 'admin')
+                            <button class="btn btn-default btn-sm deleteAllProject" data-bs-toggle="modal" data-bs-target="#deleteProjectModal" value="{{$proj->id}}" style="width: 90px">DELETE</button>
+                           @endif
                         @endif
                         
                       </td>
@@ -433,6 +437,36 @@
       </div>
     </div>
 </div>
+
+
+<div class="modal" id="deleteProjectModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Warning all data of this project will be deleted?</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('delete_all_projects')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="hidden" name="project_id" id="deleteProjectAll">
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Yes</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
   
   <!--   Core JS Files   -->
   <script src="{{URL::to('/assets/js/core/popper.min.js')}}"></script>
@@ -464,6 +498,12 @@
       $(".archive").click(function(){
         var project_id = $(this).val();
         $("#statusProjectId").val(project_id);
+
+      });
+
+       $(".deleteAllProject").click(function(){
+        var project_id = $(this).val();
+        $("#deleteProjectAll").val(project_id);
 
       });
 

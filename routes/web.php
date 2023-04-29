@@ -30,6 +30,7 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
     Route::post('/delete-user',[AdminController::class, 'deleteUser'])->name('admin_delete_user');
 
     //project
+    Route::post('/delete-all-projects',[AdminController::class, 'delete_all_projects'])->name('delete_all_projects');
     Route::get('/projects',[AdminController::class, 'projects'])->name('admin_projects');
     Route::get('/archive-projects',[AdminController::class, 'archive_projects'])->name('admin_archive_projects');
     Route::post('/projects',[AdminController::class, 'createProjects'])->name('admin_create_projects');
