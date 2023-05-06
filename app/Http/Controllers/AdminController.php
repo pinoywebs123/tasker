@@ -477,6 +477,7 @@ class AdminController extends Controller
         }
 
         $find_project->update(['status_id'=> 2]);
+        Task::where('project_id', $find_project->id)->update(['status_id'=>2]);
         return back()->with('success', 'Project '.$find_project->title.' Completed Successfully');
     }
 
