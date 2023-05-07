@@ -17,6 +17,7 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('department_id');
             $table->string('deadline');
             $table->string('project_type');
             $table->string('title');

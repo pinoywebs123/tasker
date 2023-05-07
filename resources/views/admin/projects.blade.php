@@ -90,7 +90,8 @@
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project Type</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deadline</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">College</th>
+
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -138,8 +139,9 @@
                         <span class="text-secondary text-xs font-weight-bold">{{$proj->deadline}}</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{$proj->title}}</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$proj->department_name}}</span>
                       </td>
+
                       <td class="align-middle">
                         
 
