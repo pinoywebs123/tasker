@@ -161,7 +161,7 @@
                            <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$task->id}}" style="width: 80px">Edit</button>
                            @endif
 
-                          @if($task->status_id == 1 || $task->status_id == 2)
+                          @if($task->status_id == 1 || $task->status_id == 2 || $task->status_id == 0)
                             @if(Auth::user()->getRoleNames()[0] == 'admin')
                             <button class="btn btn-primary btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}" style="width: 80px">Archive</button>
 
