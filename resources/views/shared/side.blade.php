@@ -41,14 +41,14 @@
         
      @endif
 
-     <li class="nav-item">
+     <!-- <li class="nav-item">
         <a class="nav-link " href="{{route('admin_folders')}}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <i class="ni ni-folder-17 text-primary text-sm opacity-10"></i>
           </div>
           <span class="nav-link-text ms-1">Folders</span>
         </a>
-      </li>
+      </li> -->
 
       @if( Auth::user()->getRoleNames()[0] == 'tasker' )
         <li class="nav-item">

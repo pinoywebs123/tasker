@@ -583,9 +583,11 @@ class AdminController extends Controller
         }
 
        $find_assign_project = ProjectDepartment::where('project_id',$id)->first();
-        $tasks = Task::where('project_id', $id)->with('task_files')->get();
+    //     $tasks = Task::where('project_id', $id)->with('task_files')->get();
 
-        return view('admin.tasks_files',compact('find_project','find_assign_project','tasks'));
+        $folders = TaskFirstFolder::where('user_id',Auth::id())->get();
+
+        return view('admin.tasks_files',compact('find_project','folders','find_assign_project'));
     }
 
     public function task_schedule_list($id)

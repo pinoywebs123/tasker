@@ -93,79 +93,38 @@
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
+                <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                      
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date Modified</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Size</th>
                      
-                      <th class="text-secondary opacity-7"></th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($tasks as $task)
+                    @foreach($folders as $folder)
                     <tr>
                       
                       <td>
                         <div class="d-flex px-2 py-1">
                           
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{$task->title}}</h6>
+                            <i class="ni ni-folder-17" style="font-size: 50px;"></i>
+                            <h6 class="mb-0 text-sm">{{$folder->folder_name}}</h6>
                             
                           </div>
                         </div>
                       </td>
                      
-                   
-                     
-                    
-                     
-                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{$task->updated_at}}</span>
+                      <td class="align-middle text-center">
+                        <a href="{{route('admin_folders_files',$folder->id)}}" class="btn btn-warning btn-xs">View</a>
                       </td>
                       
-                     
+                      
 
                     </tr>
-                   
-                      @foreach($task->task_files as $file)
-                      <tr>
-                          <td>
-                          <div class="d-flex justify-content-start">
-                            
-                            <div class="d-flex flex-column">
-                              <h6 class="mb-0 text-sm">
-                                 <?php 
-                                $file_name = explode("/",$file->file_name);
-                                echo $file_name[1];
-                              ?>
-                              </h6>
-                              
-                            </div>
-                          </div>
-                        </td>
-
-                      
-                        <td class="align-middle text-center">
-                          <span class="text-secondary text-xs font-weight-bold">{{$file->created_at}}</span>
-                        </td>
-
-                        <td class="align-middle text-center">
-                          <span class="text-secondary text-xs font-weight-bold">{{$file->type}}</span>
-                        </td>
-
-                        <td class="align-middle text-center">
-                          <span class="text-secondary text-xs font-weight-bold">{{$file->size}} bytes</span>
-                        </td>
-                         
-
-                      </tr>
-                      
-                      
-                      @endforeach
-                   
 
                     @endforeach
                     
