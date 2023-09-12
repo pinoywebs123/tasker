@@ -155,7 +155,8 @@
 
                          @if(Auth::user()->getRoleNames()[0] == 'admin')
                          <button class="btn btn-info btn-xs updateProject" data-bs-toggle="modal" data-bs-target="#editModal" value="{{$proj->id}}" style="width: 90px">Edit</button>
-                          <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Archive</button>
+                        <!-- <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Archive</button> -->
+                         
                          @endif
                          
                         @elseif($proj->status_id == 0)
@@ -164,7 +165,7 @@
                           <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs" style="width: 90px">View Task</a>
                           <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Activate</button>
 
-                           
+                           <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Status</button>
                         @endif
                         @if(Auth::user()->getRoleNames()[0] == 'admin')
                         <button class="btn btn-default btn-sm deleteAllProject" data-bs-toggle="modal" data-bs-target="#deleteProjectModal" value="{{$proj->id}}" style="width: 90px">DELETE</button>
