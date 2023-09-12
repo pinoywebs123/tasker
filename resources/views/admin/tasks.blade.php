@@ -163,7 +163,7 @@
 
                           @if($task->status_id == 1 || $task->status_id == 2 || $task->status_id == 0)
                             @if(Auth::user()->getRoleNames()[0] == 'admin')
-                            <button class="btn btn-primary btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}" style="width: 80px">Archive</button>
+                            <button class="btn btn-primary btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$task->id}}" style="width: 80px">Status</button>
 
                              <button class="btn btn-danger btn-xs delete"  data-bs-toggle="modal" data-bs-target="#deleteModal" value="{{$task->id}}" style="width: 80px">Delete</button>
                            
