@@ -34,6 +34,7 @@ Route::group(['prefix'=> 'admin','middleware'=> ['auth']], function(){
     Route::get('/projects',[AdminController::class, 'projects'])->name('admin_projects');
     Route::get('/archive-projects',[AdminController::class, 'archive_projects'])->name('admin_archive_projects');
     Route::post('/projects',[AdminController::class, 'createProjects'])->name('admin_create_projects');
+    Route::post('/change-projects-status',[AdminController::class, 'changeProjectStatus1'])->name('admin_change_projects_status1');
     Route::post('/change-projects',[AdminController::class, 'changeProjectStatus'])->name('admin_change_projects_status');
     Route::post('/completed-projects',[AdminController::class, 'completedProject'])->name('admin_completed_project');
     Route::post('/find-project',[AdminController::class, 'findProjects'])->name('admin_find_projects');

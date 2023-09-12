@@ -165,7 +165,7 @@
                           <a href="{{route('admin_task_list',$proj->id)}}" class="btn btn-warning btn-xs" style="width: 90px">View Task</a>
                           <button class="btn btn-success btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Activate</button>
 
-                           <button class="btn btn-danger btn-xs archive" data-bs-toggle="modal" data-bs-target="#statusModal" value="{{$proj->id}}" style="width: 90px">Status</button>
+                           <button class="btn btn-danger btn-xs archive2" data-bs-toggle="modal" data-bs-target="#statusModal2" value="{{$proj->id}}" style="width: 90px">Archive</button>
                         @endif
                         @if(Auth::user()->getRoleNames()[0] == 'admin')
                         <button class="btn btn-default btn-sm deleteAllProject" data-bs-toggle="modal" data-bs-target="#deleteProjectModal" value="{{$proj->id}}" style="width: 90px">DELETE</button>
@@ -299,12 +299,41 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
-        <form role="form" action="{{route('admin_change_projects_status')}}" method="POST">
+        <form role="form" action="{{route('admin_change_projects_status1')}}" method="POST">
         <!-- Modal body -->
         <div class="modal-body">
            
         @csrf
         <input type="hidden" name="project_id" id="statusProjectId">
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-gradient-primary">Yes</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+   <div class="modal" id="statusModal2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Archive Task?</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form role="form" action="{{route('admin_change_projects_status')}}" method="POST">
+        <!-- Modal body -->
+        <div class="modal-body">
+           
+        @csrf
+        <input type="hidden" name="project_id" id="statusProjectId2">
         </div>
 
         <!-- Modal footer -->
@@ -502,6 +531,12 @@
       $(".archive").click(function(){
         var project_id = $(this).val();
         $("#statusProjectId").val(project_id);
+
+      });
+
+      $(".archive2").click(function(){
+        var project_id = $(this).val();
+        $("#statusProjectId2").val(project_id);
 
       });
 

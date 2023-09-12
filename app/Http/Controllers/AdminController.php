@@ -177,6 +177,31 @@ class AdminController extends Controller
             $status_id = 1;
         }else if($find_project->status_id == 2)
         {
+            $status_id = 0;
+        }
+
+        $find_project->update(['status_id'=> $status_id]);
+
+        return back()->with('success','Status Updated Successfully');
+    }
+
+    public function changeProjectStatus1(Request $request)
+    {
+         $find_project = Project::find($request->project_id);
+
+        if(!$find_project)
+        {
+            return back()->with('error','Project Not Found');
+        }
+
+        if($find_project->status_id == 1)
+        {
+            $status_id = 0;
+        }else if($find_project->status_id == 0)
+        {
+            $status_id = 1;
+        }else if($find_project->status_id == 2)
+        {
             $status_id = 1;
         }
 
@@ -391,8 +416,11 @@ class AdminController extends Controller
         }else if($find_task->status_id == 0)
         {
             $status_id = 1;
+        }else if($find_task->status_id ==2)
+        {
+            $status_id = 0;
         }
-
+        
         $find_task->update(['status_id'=> $status_id]);
 
         return back()->with('success','Status Updated Successfully');
